@@ -6,6 +6,13 @@ import LoginDialog from "../Login/LoginDialog";
 import { useEffect, useState } from "react";
 import UserAvatar from "../utils/UserAvatar";
 import userInterface from "@/interfaces/userInterface";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import Logout, { logout } from "../Login/logout";
 
 const links = [
   { label: "home", link: "/" },
@@ -55,7 +62,16 @@ export default function NavBar() {
               ))}
             </div>
             {user ? (
-              <UserAvatar user={user} />
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <UserAvatar user={user} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={logout}>
+                    <Logout />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <LoginDialog
                 trigger={
