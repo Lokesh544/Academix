@@ -11,7 +11,6 @@ import {
 import StarIcon from "@/components/utils/StarIcon";
 import UserAvatar from "@/components/utils/UserAvatar";
 import Section from "@/components/Wrappers/Section";
-import userInterface from "@/interfaces/userInterface";
 import Autoplay from "embla-carousel-autoplay";
 import React from "react";
 
