@@ -4,6 +4,9 @@ const connection = {
   isConnected: 0,
 };
 
+/**
+ * Connects to the Database
+ */
 export default async function dbConnect() {
   if (connection.isConnected) {
     return;
