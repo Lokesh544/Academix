@@ -1,3 +1,5 @@
+"use client";
+
 const keywords = {
   username: "username",
   password: "userpassword",
@@ -23,12 +25,26 @@ export const localdata = {
   },
 
   /**
+   * Removes username from Local Storage
+   */
+  removeUsername: () => {
+    window.localStorage.removeItem(keywords.username);
+  },
+
+  /**
+   * Removes user password from Local Storage
+   */
+  removeUserpassword: () => {
+    window.localStorage.removeItem(keywords.password);
+  },
+
+  /**
    * @returns Username from Local Storage
    */
-  username: window.localStorage.getItem(keywords.username),
+  username: () => window.localStorage.getItem(keywords.username),
 
   /**
    * @returns Password from Local Storage
    */
-  password: window.localStorage.getItem(keywords.password),
+  password: () => window.localStorage.getItem(keywords.password),
 };

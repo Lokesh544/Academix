@@ -15,18 +15,33 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { localdata } from "@/localdata";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
+  role: z.number(),
   password: z.string().min(2).max(50),
   cpassword: z.string().min(2).max(50),
 });
+
+const roles = {
+  0: "Student",
+  1: "Instructor",
+};
 
 export default function SignUp() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      role: 0,
       password: "",
       cpassword: "",
     },
@@ -44,7 +59,7 @@ export default function SignUp() {
     const res = await fetch(
       `/api/user/signup?username=${values.username.toLowerCase()}&password=${
         values.password
-      }`,
+      }&role=${values.role}`,
       {
         method: "GET",
       }
@@ -53,8 +68,8 @@ export default function SignUp() {
       toast({ title: res.error });
       setActive(true);
     } else {
-      window.localStorage.setItem("username", res.user.username);
-      window.localStorage.setItem("password", res.user.password);
+      localdata.setUsername(res.user.username);
+      localdata.setUserpassword(res.user.password);
       toast({ title: "Account Created Successfully" });
       setTimeout(() => {
         window.location.reload();
@@ -74,6 +89,33 @@ export default function SignUp() {
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input placeholder="Username" className="bg-muted" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="role"
+          render={({ field }) => (
+            <FormItem className="text-primary">
+              <FormLabel>Role</FormLabel>
+              <FormControl>
+                <Select
+                  defaultValue={field.value.toString()}
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.keys(roles).map((ele, id) => (
+                      <SelectItem value={ele} key={id}>
+                        {roles[ele]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>

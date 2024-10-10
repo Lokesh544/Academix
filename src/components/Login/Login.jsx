@@ -15,6 +15,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { localdata } from "@/localdata";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -22,17 +23,13 @@ const formSchema = z.object({
 });
 
 export default function Login() {
-  const form =
-    useForm <
-    z.infer <
-    typeof formSchema >>
-      {
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          username: "",
-          password: "",
-        },
-      };
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
   const { toast } = useToast();
   const [active, setActive] = useState(true);
 
@@ -51,8 +48,8 @@ export default function Login() {
       toast({ title: res.error });
       setActive(true);
     } else {
-      window.localStorage.setItem("username", res.user.username);
-      window.localStorage.setItem("password", res.user.password);
+      localdata.setUsername(res.user.username);
+      localdata.setUserpassword(res.user.password);
       toast({ title: "Logged in Successfully" });
       setTimeout(() => {
         window.location.reload();
@@ -84,7 +81,12 @@ export default function Login() {
             <FormItem className="text-primary">
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Password" className="bg-muted" {...field} />
+                <Input
+                  placeholder="Password"
+                  className="bg-muted"
+                  type="password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

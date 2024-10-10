@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { localdata } from "@/localdata";
 import { LogOutIcon } from "lucide-react";
 
 export async function logout() {
-  window.localStorage.removeItem("username");
-  window.localStorage.removeItem("password");
+  localdata.removeUsername();
+  localdata.removeUserpassword();
   setTimeout(() => {
     window.location.href = "/";
   }, 1000);
