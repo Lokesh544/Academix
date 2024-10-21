@@ -11,10 +11,12 @@ import UserAvatar from "@/components/utils/UserAvatar";
 import { data } from "@/data";
 import { praseHttps, praseNumberToString } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 
-export default async function Course() {
+export default async function Course({ id }) {
   const course = {
-    about: "adagfaw",
+    about:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga, fugiat.",
     data: '{"titleImg": "", "modules": []}',
     description:
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima quibusdam sequi incidunt, magni accusantium dolorem esse impedit illum veritatis in iure repellendus est fugiat adipisci maxime modi assumenda eum facilis nihil quisquam? Perspiciatis quidem porro dignissimos nulla, at sapiente, ratione eveniet id voluptates nobis iure architecto eligendi quisquam ducimus beatae. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima quibusdam sequi incidunt, magni accusantium dolorem esse impedit illum veritatis in iure repellendus est fugiat adipisci maxime modi assumenda eum facilis nihil quisquam? Perspiciatis quidem porro dignissimos nulla, at sapiente, ratione eveniet id voluptates nobis iure architecto eligendi quisquam ducimus beatae. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima quibusdam sequi incidunt, magni accusantium dolorem esse impedit illum veritatis in iure repellendus est fugiat adipisci maxime modi assumenda eum facilis nihil quisquam? Perspiciatis quidem porro dignissimos nulla, at sapiente, ratione eveniet id voluptates nobis iure architecto eligendi quisquam ducimus beatae.",
@@ -109,10 +111,17 @@ export default async function Course() {
         <p>{praseNumberToString(course.students)} already enrolled</p>
       </div>
       {/* TODO Edit Course Button */}
-      <div className="hidden">
-        <Button variant="secondary" size="lg">
-          <TypographyH4>Edit Course</TypographyH4>
-        </Button>
+      <div className="h idden flex gap-4">
+        <Link href={`./${id}/edit`}>
+          <Button variant="secondary" size="lg">
+            <TypographyH4>Edit Course</TypographyH4>
+          </Button>
+        </Link>
+        <Link href={`./${id}/edit/card`}>
+          <Button variant="secondary" size="lg">
+            <TypographyH4>Edit Course Card</TypographyH4>
+          </Button>
+        </Link>
       </div>
       <div>
         <TypographyP>{course.description}</TypographyP>

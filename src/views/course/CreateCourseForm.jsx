@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TypographyH1 } from "@/components/ui/typography";
 import { useToast } from "@/hooks/use-toast";
+import { praseHttps } from "@/lib/utils";
 import postCreateCourse from "@/lib/utils/course/postCreateCourse";
 import { localdata } from "@/localdata";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +30,7 @@ const formSchema = z.object({
   expectedTime: z.string(),
 });
 
-export default function CourseForm() {
+export default function CreateCourseForm() {
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -105,16 +106,26 @@ export default function CourseForm() {
             control={form.control}
             name="imageUrl"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Course Profile Image</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Course Profile Image - https link"
-                    className="border-2 bg-[#0003]"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
+              <FormItem className="flex">
+                <div className="grow">
+                  <FormLabel>Course Profile Image</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Course Profile Image - https link"
+                      className="border-2 bg-[#0003]"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+                <div className="ml-4">
+                  {field.value != "" && (
+                    <img
+                      src={praseHttps(field.value)}
+                      className="rounded max-w-80"
+                    />
+                  )}
+                </div>
               </FormItem>
             )}
           />
