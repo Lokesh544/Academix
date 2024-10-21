@@ -3,21 +3,23 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import React from "react";
 
-const SearchBar = React.forwardRef(({ className, ...props }, ref) => {
-  return (
-    <form
-      className={cn("flex items-center space-x-2 p-2", className)}
-      {...props}
-    >
-      <SearchBarInput ref={ref} />
-      <SearchBarButton />
-    </form>
-  );
-});
+const SearchBar = React.forwardRef(
+  ({ className, name = "search", ...props }, ref) => {
+    return (
+      <form
+        className={cn("flex items-center space-x-2 p-2", className)}
+        {...props}
+      >
+        <SearchBarInput name={name} ref={ref} />
+        <SearchBarButton label={name} />
+      </form>
+    );
+  }
+);
 export default SearchBar;
 
 export const SearchBarInput = React.forwardRef(
-  ({ className, type = "text", ...props }, ref) => {
+  ({ className, name, type = "text", ...props }, ref) => {
     return (
       <Input
         className={cn(
@@ -26,6 +28,7 @@ export const SearchBarInput = React.forwardRef(
         )}
         ref={ref}
         type={type}
+        name={name}
         {...props}
       />
     );
@@ -34,14 +37,14 @@ export const SearchBarInput = React.forwardRef(
 
 export function SearchBarButton({
   className,
-  label = "Search",
+  label,
   type = "submit",
   ...props
 }) {
   return (
     <Button
       className={cn(
-        "rounded-lg bg-secondary-200 text-primary hover:bg-secondary-200/90",
+        "rounded-lg bg-secondary-200 text-primary hover:bg-secondary-200/90 capitalize",
         className
       )}
       type={type}

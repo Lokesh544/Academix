@@ -14,5 +14,5 @@ export const POST = TryCatch(async (req) => {
   const nameRegex = new RegExp(EscapeRegex(req.data.search || ""), "gi");
   const courses = Course.find({ name: nameRegex });
 
-  return NextResponse({ courses });
+  return NextResponse.json({ courses });
 });

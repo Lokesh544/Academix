@@ -23,7 +23,7 @@ export default function Hero() {
             shapes the application's architecture and performance. Join us and
             broaden your development horizons.
           </div>
-          <SearchBar className="w-11/12 lg:w-10/12" />
+          <SearchBar action="/courses" className="w-11/12 lg:w-10/12" />
         </div>
         <Image
           src={HeroImage}

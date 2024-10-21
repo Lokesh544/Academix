@@ -11,5 +11,5 @@ export const POST = TryCatch(async (req) => {
   await authorizeUser(req);
 
   const course = await Course.findById(req.data.courseId);
-  return NextResponse({ course });
+  return NextResponse.json({ course });
 });

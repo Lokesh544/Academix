@@ -12,5 +12,5 @@ export const POST = TryCatch(async (req) => {
 
   const user = User.findById(req.data.userId);
 
-  return NextResponse({ user });
+  return NextResponse.json({ user });
 });

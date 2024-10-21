@@ -25,14 +25,14 @@ export const localdata = {
   },
 
   /**
-   * Removes username from Local Storage
+   * Removes Username from Local Storage
    */
   removeUsername: () => {
     window.localStorage.removeItem(keywords.username);
   },
 
   /**
-   * Removes user password from Local Storage
+   * Removes User Password from Local Storage
    */
   removeUserpassword: () => {
     window.localStorage.removeItem(keywords.password);
@@ -44,7 +44,7 @@ export const localdata = {
   username: () => window.localStorage.getItem(keywords.username),
 
   /**
-   * @returns Password from Local Storage
+   * @returns User Password from Local Storage
    */
   password: () => window.localStorage.getItem(keywords.password),
 };

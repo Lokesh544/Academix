@@ -16,9 +16,13 @@ import Logout, { logout } from "../Login/logout";
 const links = [
   { label: "home", link: "/" },
   { label: "Dashboard", link: "/" },
-  { label: "Courses", link: "/" },
+  { label: "Courses", link: "/courses" },
   { label: "Blog", link: "/" },
   { label: "Contact", link: "/" },
+];
+
+const profileLinks = [
+  { label: "create course", link: "/create/course", role: 1 },
 ];
 
 export default function NavBar() {
@@ -66,6 +70,18 @@ export default function NavBar() {
                   <UserAvatar user={user} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
+                  {profileLinks.map(
+                    (ele, id) =>
+                      ele.role <= user.role && (
+                        <DropdownMenuItem
+                          key={id}
+                          asChild
+                          className="capitalize"
+                        >
+                          <Link href={ele.link}>{ele.label}</Link>
+                        </DropdownMenuItem>
+                      )
+                  )}
                   <DropdownMenuItem onClick={logout}>
                     <Logout />
                   </DropdownMenuItem>

@@ -12,13 +12,14 @@ export const POST = TryCatch(async (req) => {
 
   const course = new Course({
     userId: req.data.user._id,
-    name: req.date.name,
+    name: req.data.name,
+    imageUrl: req.data.imageUrl,
     about: req.data.about,
+    description: req.data.description,
     price: req.data.price,
     expectedTime: req.data.expectedTime,
-    data: req.data.courseData,
   });
 
   //[ ] await course.save();
-  return NextResponse({ course });
+  return NextResponse.json({ course });
 });

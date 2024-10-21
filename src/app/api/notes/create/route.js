@@ -17,5 +17,5 @@ export const POST = TryCatch(async (req) => {
   });
 
   //[ ] await notes.save();
-  return NextResponse({ notes });
+  return NextResponse.json({ notes });
 });
