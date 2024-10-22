@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import Section from "@/components/Wrappers/Section";
+import Section from "@/components/wrappers/Section";
 import { GraduationCapIcon, User2Icon, VideoIcon } from "lucide-react";
 import Image from "next/image";
 import StatImage from "@/assets/MAIN-IMAGE.webp";

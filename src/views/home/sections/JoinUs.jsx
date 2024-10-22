@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import Section from "@/components/Wrappers/Section";
+import Section from "@/components/wrappers/Section";
 
 export default function JoinUs() {
   return (

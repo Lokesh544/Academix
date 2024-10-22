@@ -1,4 +1,4 @@
-import CourseCard from "@/components/Basic/CourseCard";
+import CourseCard from "@/components/basic/CourseCard";
 import { TypographyH1 } from "@/components/ui/typography";
 import CardRender from "@/components/utils/CardRender";
 import SearchBar from "@/components/utils/SearchBar";

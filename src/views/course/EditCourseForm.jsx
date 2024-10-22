@@ -1,10 +1,12 @@
 "use client";
 
+import ModulesEditForm, {
+  courseModuleFormSchema,
+} from "@/components/course/ModulesEditForm";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,18 +23,49 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const formSchema = z.object({
+const courseFormSchema = z.object({
   titleImg: z.string(),
-  modules: z.array(),
+  modules: z.array(courseModuleFormSchema),
 });
 
 export default function EditCourseForm() {
   const { toast } = useToast();
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(courseFormSchema),
     defaultValues: {
       titleImg: "",
-      modules: [],
+      modules: [
+        {
+          name: "Put your Certificate to work 1",
+          description:
+            "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
+          lessons: [
+            { type: "reading", name: "Lesson 1", minutes: 5, data: "" },
+            { type: "reading", name: "Lesson 2", minutes: 5, data: "" },
+            { type: "reading", name: "Lesson 3", minutes: 5, data: "" },
+            { type: "reading", name: "Lesson 4", minutes: 5, data: "" },
+            { type: "reading", name: "Lesson 5", minutes: 5, data: "" },
+            { type: "quiz", name: "Lesson 6", minutes: 5, data: "" },
+            { type: "quiz", name: "Lesson 7", minutes: 5, data: "" },
+            { type: "quiz", name: "Lesson 8", minutes: 5, data: "" },
+          ],
+          hours: 4,
+        },
+        {
+          name: "Put your Certificate to work 2",
+          description:
+            "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
+          lessons: [],
+          hours: 4,
+        },
+        {
+          name: "Put your Certificate to work 3",
+          description:
+            "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
+          lessons: [],
+          hours: 4,
+        },
+      ],
     },
   });
 
@@ -100,6 +133,11 @@ export default function EditCourseForm() {
                 )}
               </FormItem>
             )}
+          />
+          <FormField
+            control={form.control}
+            name="modules"
+            render={(props) => <ModulesEditForm toast={toast} {...props} />}
           />
           <Button variant="secondary" type="submit" className="block mx-auto">
             Submit

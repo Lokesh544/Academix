@@ -1,4 +1,4 @@
-import Section from "@/components/Wrappers/Section";
+import Section from "@/components/wrappers/Section";
 import Image from "next/image";
 
 import HeroImage from "@/assets/Fourth-Image.webp";

@@ -1,4 +1,4 @@
-import CourseModuleListItem from "@/components/Basic/CourseModuleListItem";
+import CourseModuleListItem from "@/components/basic/CourseModuleListItem";
 import { Button } from "@/components/ui/button";
 import {
   TypographyH1,
@@ -31,7 +31,7 @@ export default async function Course({ id }) {
   course.data = JSON.stringify({
     modules: [
       {
-        name: "Put your Certificate to work",
+        name: "Put your Certificate to work 1",
         description:
           "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
         lessons: [
@@ -47,14 +47,14 @@ export default async function Course({ id }) {
         hours: 4,
       },
       {
-        name: "Put your Certificate to work",
+        name: "Put your Certificate to work 2",
         description:
           "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
         lessons: [{}],
         hours: 4,
       },
       {
-        name: "Put your Certificate to work",
+        name: "Put your Certificate to work 3",
         description:
           "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
         lessons: [{}],

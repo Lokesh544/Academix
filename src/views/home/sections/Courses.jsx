@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import Section from "@/components/Wrappers/Section";
+import Section from "@/components/wrappers/Section";
 import Image from "next/image";
 import CourseImg from "@/assets/course-image.png";
 import { PlayIcon } from "lucide-react";
@@ -9,7 +9,7 @@ import StarIcon from "@/components/utils/StarIcon";
 import UserAvatar from "@/components/utils/UserAvatar";
 import Link from "next/link";
 import CardRender from "@/components/utils/CardRender";
-import CourseCard from "@/components/Basic/CourseCard";
+import CourseCard from "@/components/basic/CourseCard";
 
 const CourseData = [
   {

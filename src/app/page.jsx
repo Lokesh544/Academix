@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer/Footer";
-import NavBar from "@/components/Navbar/NavBar";
+import Footer from "@/components/footer/Footer";
+import NavBar from "@/components/navbar/NavBar";
 import Courses from "@/views/home/sections/Courses";
 import Features from "@/views/home/sections/Features";
 import Hero from "@/views/home/sections/Hero";

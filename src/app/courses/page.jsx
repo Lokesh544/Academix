@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer/Footer";
-import NavBar from "@/components/Navbar/NavBar";
+import Footer from "@/components/footer/Footer";
+import NavBar from "@/components/navbar/NavBar";
 import Courses from "@/views/courses/courses";
 
 export default function Page({ searchParams }) {

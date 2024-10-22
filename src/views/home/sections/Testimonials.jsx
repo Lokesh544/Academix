@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import StarIcon from "@/components/utils/StarIcon";
 import UserAvatar from "@/components/utils/UserAvatar";
-import Section from "@/components/Wrappers/Section";
+import Section from "@/components/wrappers/Section";
 import Autoplay from "embla-carousel-autoplay";
 import React from "react";
 
