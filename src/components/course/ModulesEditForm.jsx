@@ -30,7 +30,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -123,7 +122,8 @@ export default function ModulesEditForm({ field, toast }) {
           </Popover>
           <Button
             variant="secondary"
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault();
               const data = field.value;
               data.push({
                 name: `Module ${data.length + 1}`,
@@ -132,11 +132,24 @@ export default function ModulesEditForm({ field, toast }) {
                 hours: 0,
               });
               field.onChange(data);
+              toast({
+                description: `Module Add`,
+                duration: 1000,
+              });
             }}
           >
             Add
           </Button>
-          <Button variant="destructive" disabled>
+          <Button
+            variant="destructive"
+            disabled={value == ""}
+            onClick={(event) => {
+              event.preventDefault();
+              let data = field.value;
+              data = data.filter((ele, i) => i != moduleMap[value]);
+              field.onChange(data);
+            }}
+          >
             Delete
           </Button>
         </div>
@@ -179,7 +192,6 @@ function ModuleEditForm({ field, value: id, close, toast }) {
   async function onSubmit(values) {
     const data = field.value;
     data[id] = values;
-    console.log(data);
     field.onChange(data);
     toast({
       description: `Module Updated`,
@@ -272,7 +284,13 @@ function ModuleEditForm({ field, value: id, close, toast }) {
                 <Input
                   placeholder="Hours to Complete Module"
                   className="border-2 bg-[#0003]"
+                  type="number"
+                  min={0}
                   {...module_field}
+                  onChange={(event) => {
+                    let data = parseInt(event.target.value || 0);
+                    module_field.onChange(data);
+                  }}
                 />
               </FormControl>
               <FormMessage />

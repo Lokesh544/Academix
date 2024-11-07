@@ -8,7 +8,7 @@ export default function Page({ searchParams }) {
   return (
     <main className="max-w-screen-xl h-screen mx-auto px-10">
       <NavBar />
-      <Courses />
+      <Courses search={searchParams.search} />
       <Footer />
     </main>
   );

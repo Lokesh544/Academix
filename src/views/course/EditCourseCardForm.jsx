@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,9 +13,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TypographyH1 } from "@/components/ui/typography";
 import { useToast } from "@/hooks/use-toast";
-import postCreateCourse from "@/lib/utils/course/postCreateCourse";
+import getCourse from "@/lib/utils/course/getCourse";
+import postUpdateCourse from "@/lib/utils/course/postUpdateCourse";
 import { localdata } from "@/localdata";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -29,8 +31,7 @@ const formSchema = z.object({
   expectedTime: z.string(),
 });
 
-// TODO
-export default function EditCourseCardForm() {
+export default function EditCourseCardForm({ id }) {
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -44,36 +45,58 @@ export default function EditCourseCardForm() {
     },
   });
 
+  useEffect(() => {
+    if (typeof window != "undefined") {
+      (async () => {
+        await getCourse(id, localdata.username(), localdata.password())
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.course) return res.course;
+            else throw Error(res.error);
+          })
+          .then((course) => {
+            form.setValue("name", course.name);
+            form.setValue("about", course.about);
+            form.setValue("description", course.description);
+            form.setValue("expectedTime", course.expectedTime);
+            form.setValue("imageUrl", course.imageUrl);
+            form.setValue("price", course.price);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })();
+    }
+  }, []);
+
   async function onSubmit(values) {
-    await postCreateCourse(
-      localdata.username(),
-      localdata.password(),
-      values.name,
-      values.imageUrl,
-      values.about,
-      values.description,
-      values.price,
-      values.expectedTime
-    )
+    await postUpdateCourse({
+      username: localdata.username(),
+      userpassword: localdata.password(),
+      courseId: id,
+      name: values.name,
+      imageUrl: values.imageUrl,
+      about: values.about,
+      description: values.description,
+      price: values.price,
+      expectedTime: values.expectedTime,
+    })
       .then((res) => res.json())
       .then((res) => {
-        if (res?.course) return res.course;
+        if (res?.success) return res.success;
         else throw new Error(res.error);
       })
-      .then((course) => {
-        console.log(course);
+      .then((success) => {
         toast({
-          description: `Course Created Successfully 🎉`,
+          description: `Course Updated Successfully 🎉`,
         });
         setTimeout(() => {
-          console.log("Yea");
-          // [ ]
-          // window.location.href = `/course/${course._id}`
+          window.location.href = `/course/${id}`;
         }, 2000);
       })
       .catch((err) => {
         toast({
-          description: err,
+          description: err.message,
         });
       });
   }
@@ -197,9 +220,14 @@ export default function EditCourseCardForm() {
               </FormItem>
             )}
           />
-          <Button variant="secondary" type="submit" className="block mx-auto">
-            Submit
-          </Button>
+          <div className="flex gap-4 justify-center">
+            <Button variant="secondary" type="submit">
+              Submit
+            </Button>
+            <Button variant="secondary" asChild>
+              <Link href="..">Go to Course</Link>
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

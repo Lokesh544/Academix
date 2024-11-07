@@ -12,7 +12,7 @@ export const POST = TryCatch(async (req) => {
   await authorizeUser(req);
 
   const nameRegex = new RegExp(EscapeRegex(req.data.search || ""), "gi");
-  const courses = Course.find({ name: nameRegex });
+  const courses = await Course.find({ name: nameRegex });
 
   return NextResponse.json({ courses });
 });

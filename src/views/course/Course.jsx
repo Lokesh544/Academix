@@ -1,3 +1,5 @@
+"use client";
+
 import CourseModuleListItem from "@/components/basic/CourseModuleListItem";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,66 +12,97 @@ import ListRender from "@/components/utils/ListRender";
 import UserAvatar from "@/components/utils/UserAvatar";
 import { data } from "@/data";
 import { praseHttps, praseNumberToString } from "@/lib/utils";
+import getCourse from "@/lib/utils/course/getCourse";
+import getUser from "@/lib/utils/user/getUser";
+import getUserId from "@/lib/utils/user/getUserId";
+import { localdata } from "@/localdata";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default async function Course({ id }) {
-  const course = {
-    about:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga, fugiat.",
-    data: '{"titleImg": "", "modules": []}',
-    description:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima quibusdam sequi incidunt, magni accusantium dolorem esse impedit illum veritatis in iure repellendus est fugiat adipisci maxime modi assumenda eum facilis nihil quisquam? Perspiciatis quidem porro dignissimos nulla, at sapiente, ratione eveniet id voluptates nobis iure architecto eligendi quisquam ducimus beatae. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima quibusdam sequi incidunt, magni accusantium dolorem esse impedit illum veritatis in iure repellendus est fugiat adipisci maxime modi assumenda eum facilis nihil quisquam? Perspiciatis quidem porro dignissimos nulla, at sapiente, ratione eveniet id voluptates nobis iure architecto eligendi quisquam ducimus beatae. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima quibusdam sequi incidunt, magni accusantium dolorem esse impedit illum veritatis in iure repellendus est fugiat adipisci maxime modi assumenda eum facilis nihil quisquam? Perspiciatis quidem porro dignissimos nulla, at sapiente, ratione eveniet id voluptates nobis iure architecto eligendi quisquam ducimus beatae.",
-    expectedTime: "awdawd",
-    imageUrl: "awdawd",
-    name: "Course",
-    price: "awfdawf",
+export default function Course({ id }) {
+  const [course, setCourse] = useState({
+    about: "-----",
+    description: "------",
+    expectedTime: "----",
+    imageUrl: "---",
+    name: "----",
+    price: "---",
     rating: 1,
-    userId: "66d6c0984817eb1a932ba90f",
-    _id: "6715d4817f229c84da1ef2e5",
-  };
-  course.data = JSON.stringify({
-    modules: [
-      {
-        name: "Put your Certificate to work 1",
-        description:
-          "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
-        lessons: [
-          { type: "reading" },
-          { type: "reading" },
-          { type: "reading" },
-          { type: "reading" },
-          { type: "reading" },
-          { type: "quiz" },
-          { type: "quiz" },
-          { type: "quiz" },
-        ],
-        hours: 4,
-      },
-      {
-        name: "Put your Certificate to work 2",
-        description:
-          "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
-        lessons: [{}],
-        hours: 4,
-      },
-      {
-        name: "Put your Certificate to work 3",
-        description:
-          "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
-        lessons: [{}],
-        hours: 4,
-      },
-    ],
+    userId: "--",
+    _id: "--",
+    students: 0,
+    data: {
+      modules: [],
+      titleImg: "",
+    },
+    instructor: {
+      name: "----",
+      about: "----",
+      img: data.defaultUserProfileImg,
+      role: 1,
+    },
   });
-  course.data = await JSON.parse(course.data);
-  course.students = 1230487;
-  course.instructor = {
-    name: "Ebou Jobe",
-    about: "Developer",
-    img: "https://github.com/shadcn.png",
-    role: 1,
-  };
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    if (typeof window != "undefined") {
+      (async () => {
+        await getCourse(id, localdata.username(), localdata.password())
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.course) return res.course;
+            else throw Error(res.error);
+          })
+          .then(async (course) => {
+            course.instructor = {
+              name: "",
+              about: "",
+              img: "",
+              role: 1,
+            };
+            course.students = 0;
+            course.data = JSON.parse(course.data);
+            setCourse(course);
+            await getUser(
+              localdata.username(),
+              localdata.password(),
+              course.userId
+            )
+              .then((res) => res.json())
+              .then((res) => {
+                if (res.user) return res.user;
+                else throw Error(res.error);
+              })
+              .then((user) => {
+                const newC = course;
+                newC.instructor = user;
+                setCourse(newC);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            // TODO Get number of students
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        await getUserId(localdata.username(), localdata.password())
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.userId) return res.userId;
+            else throw Error(res.error);
+          })
+          .then((userId) => {
+            setUserId(userId);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })();
+    }
+  }, []);
+
   console.log(course);
 
   return (
@@ -111,18 +144,20 @@ export default async function Course({ id }) {
         <p>{praseNumberToString(course.students)} already enrolled</p>
       </div>
       {/* TODO Edit Course Button */}
-      <div className="h idden flex gap-4">
-        <Link href={`./${id}/edit`}>
-          <Button variant="secondary" size="lg">
-            <TypographyH4>Edit Course</TypographyH4>
-          </Button>
-        </Link>
-        <Link href={`./${id}/edit/card`}>
-          <Button variant="secondary" size="lg">
-            <TypographyH4>Edit Course Card</TypographyH4>
-          </Button>
-        </Link>
-      </div>
+      {course.userId == userId && (
+        <div className="h idden flex gap-4">
+          <Link href={`./${id}/edit`}>
+            <Button variant="secondary" size="lg">
+              <TypographyH4>Edit Course</TypographyH4>
+            </Button>
+          </Link>
+          <Link href={`./${id}/edit/card`}>
+            <Button variant="secondary" size="lg">
+              <TypographyH4>Edit Course Card</TypographyH4>
+            </Button>
+          </Link>
+        </div>
+      )}
       <div>
         <TypographyP>{course.description}</TypographyP>
       </div>

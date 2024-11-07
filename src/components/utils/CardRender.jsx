@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
-import React from "react";
 
 /**
  *
- * @param {{data: object, ItemRender: React.JSXElementConstructor, children?: React.JSX.Element | string, className?: string | object, props}} props
+ * @param {{data: object, ItemRender: React.JSXElementConstructor, children?: React.JSX.Element | string, className?: string | object, placeholder: string, props}} props
  * @returns
  */
 export default function CardRender({
@@ -11,6 +10,7 @@ export default function CardRender({
   className,
   data,
   ItemRender,
+  placeholder = "No Item Found",
   ...props
 }) {
   return (
@@ -22,9 +22,9 @@ export default function CardRender({
       {...props}
     >
       {children}
-      {data.map((ele, id) => (
-        <ItemRender key={id} id={id} {...ele} />
-      ))}
+      {typeof data != "undefined"
+        ? data.map((ele, id) => <ItemRender key={id} id={id} {...ele} />)
+        : placeholder}
     </div>
   );
 }

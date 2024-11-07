@@ -45,16 +45,16 @@ export default function CreateCourseForm() {
   });
 
   async function onSubmit(values) {
-    await postCreateCourse(
-      localdata.username(),
-      localdata.password(),
-      values.name,
-      values.imageUrl,
-      values.about,
-      values.description,
-      values.price,
-      values.expectedTime
-    )
+    await postCreateCourse({
+      username: localdata.username(),
+      userpassword: localdata.password(),
+      name: values.name,
+      imageUrl: values.imageUrl,
+      about: values.about,
+      description: values.description,
+      price: values.price,
+      expectedTime: values.expectedTime,
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res?.course) return res.course;
@@ -66,14 +66,12 @@ export default function CreateCourseForm() {
           description: `Course Created Successfully 🎉`,
         });
         setTimeout(() => {
-          console.log("Yea");
-          // [ ]
-          // window.location.href = `/course/${course._id}`
+          window.location.href = `/course/${course._id}`;
         }, 2000);
       })
       .catch((err) => {
         toast({
-          description: err,
+          description: err.message,
         });
       });
   }

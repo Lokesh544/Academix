@@ -12,6 +12,6 @@ export default async function authorizeUser(req) {
   const users = await User.find({ username: req.data.username });
   if (users.length <= 0) throw new Error("User Not Found!");
   if (users[0].password != req.data.userpassword)
-    throw new Error("Wrong Password!");
+    throw new Error("Wrong User Password!");
   req.data.user = users[0];
 }

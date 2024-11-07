@@ -17,9 +17,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { TypographyH1 } from "@/components/ui/typography";
 import { useToast } from "@/hooks/use-toast";
 import { praseHttps } from "@/lib/utils";
+import getCourse from "@/lib/utils/course/getCourse";
 import postCreateCourse from "@/lib/utils/course/postCreateCourse";
+import postUpdateCourse from "@/lib/utils/course/postUpdateCourse";
 import { localdata } from "@/localdata";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -28,81 +32,62 @@ const courseFormSchema = z.object({
   modules: z.array(courseModuleFormSchema),
 });
 
-export default function EditCourseForm() {
+export default function EditCourseForm({ id }) {
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(courseFormSchema),
     defaultValues: {
       titleImg: "",
-      modules: [
-        {
-          name: "Put your Certificate to work 1",
-          description:
-            "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
-          lessons: [
-            { type: "reading", name: "Lesson 1", minutes: 5, data: "" },
-            { type: "reading", name: "Lesson 2", minutes: 5, data: "" },
-            { type: "reading", name: "Lesson 3", minutes: 5, data: "" },
-            { type: "reading", name: "Lesson 4", minutes: 5, data: "" },
-            { type: "reading", name: "Lesson 5", minutes: 5, data: "" },
-            { type: "quiz", name: "Lesson 6", minutes: 5, data: "" },
-            { type: "quiz", name: "Lesson 7", minutes: 5, data: "" },
-            { type: "quiz", name: "Lesson 8", minutes: 5, data: "" },
-          ],
-          hours: 4,
-        },
-        {
-          name: "Put your Certificate to work 2",
-          description:
-            "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
-          lessons: [],
-          hours: 4,
-        },
-        {
-          name: "Put your Certificate to work 3",
-          description:
-            "Earning your Google Data Analytics Certificate is a badge of honor. It's also a real badge. In this part of the course, you'll learn how to claim your certificate badge and display it in your LinkedIn profile. You'll also be introduced to job search benefits that you can claim as a certificate holder, including access to the Big Interview platform and Byteboard interviews.",
-          lessons: [],
-          hours: 4,
-        },
-      ],
+      modules: [],
     },
   });
 
-  async function onSubmit(values) {
-    console.log(values);
-  }
+  useEffect(() => {
+    if (typeof window != "undefined") {
+      (async () => {
+        await getCourse(id, localdata.username(), localdata.password())
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.course) return res.course;
+            else throw Error(res.error);
+          })
+          .then((course) => {
+            const data = JSON.parse(course.data);
+            form.setValue("modules", data.modules);
+            form.setValue("titleImg", data.titleImg);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })();
+    }
+  }, []);
 
-  async function t_onSubmit(values) {
-    await postCreateCourse(
-      localdata.username(),
-      localdata.password(),
-      values.name,
-      values.imageUrl,
-      values.about,
-      values.description,
-      values.price,
-      values.expectedTime
-    )
+  // TODO
+  async function onSubmit(values) {
+    const data = JSON.stringify(values);
+    await postUpdateCourse({
+      username: localdata.username(),
+      userpassword: localdata.password(),
+      courseId: id,
+      data: data,
+    })
       .then((res) => res.json())
       .then((res) => {
-        if (res?.course) return res.course;
+        if (res?.success) return res.success;
         else throw new Error(res.error);
       })
-      .then((course) => {
-        console.log(course);
+      .then((success) => {
         toast({
-          description: `Course Created Successfully 🎉`,
+          description: `Course Updated Successfully 🎉`,
         });
         setTimeout(() => {
-          console.log("Yea");
-          // [ ]
-          // window.location.href = `/course/${course._id}`
+          window.location.href = `/course/${id}`;
         }, 2000);
       })
       .catch((err) => {
         toast({
-          description: err,
+          description: err.message,
         });
       });
   }
@@ -139,9 +124,14 @@ export default function EditCourseForm() {
             name="modules"
             render={(props) => <ModulesEditForm toast={toast} {...props} />}
           />
-          <Button variant="secondary" type="submit" className="block mx-auto">
-            Submit
-          </Button>
+          <div className="flex gap-4 justify-center">
+            <Button variant="secondary" type="submit">
+              Submit
+            </Button>
+            <Button variant="secondary" asChild>
+              <Link href=".">Go to Course</Link>
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

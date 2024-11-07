@@ -2,7 +2,7 @@
 
 import { Button } from "../ui/button";
 import Link from "next/link";
-import LoginDialog from "../Login/LoginDialog";
+import LoginDialog from "../login/LoginDialog";
 import { useEffect, useState } from "react";
 import UserAvatar from "../utils/UserAvatar";
 import {
@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import Logout, { logout } from "../Login/logout";
+import Logout, { logout } from "../login/logout";
 
 const links = [
   { label: "home", link: "/" },

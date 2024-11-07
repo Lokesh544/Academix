@@ -17,7 +17,7 @@ export default function CourseCard({
   className,
   instructor,
   id,
-  stars,
+  rating,
   students,
   ...props
 }) {
@@ -57,12 +57,12 @@ export default function CourseCard({
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            {[...Array(Math.min(Math.max(stars, 0), 5))]
+            {[...Array(Math.min(Math.max(rating, 0), 5))]
               .splice(0, 5)
               .map((_, id) => (
                 <StarIcon key={id} glow />
               ))}
-            {[...Array(Math.max(5 - stars, 0))].map((_, id) => (
+            {[...Array(Math.max(5 - rating, 0))].map((_, id) => (
               <StarIcon key={id} />
             ))}
           </div>

@@ -21,23 +21,19 @@ import {
   CommandList,
 } from "../ui/command";
 import { cn } from "@/lib/utils";
-import { TypographyH2 } from "../ui/typography";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
+import { data } from "@/data";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import LessonDataEditForm from "./LessonDataEditForm";
 
 export const courseModuleLessonFormSchema = z.object({
   name: z.string(),
@@ -119,20 +115,34 @@ export default function LessonsEditForm({ field, toast }) {
           </Popover>
           <Button
             variant="secondary"
-            onClick={() => {
-              const data = field.value;
-              data.push({
-                name: `Lesson ${data.length + 1}`,
-                type: "reading",
+            onClick={(event) => {
+              event.preventDefault();
+              const list = field.value;
+              list.push({
+                name: `Lesson ${list.length + 1}`,
+                type: data.lessonTypes[0],
                 minutes: 0,
                 data: "",
               });
-              field.onChange(data);
+              field.onChange(list);
+              toast({
+                description: `Lesson Add`,
+                duration: 1000,
+              });
             }}
           >
             Add
           </Button>
-          <Button variant="destructive" disabled>
+          <Button
+            variant="destructive"
+            disabled={value == ""}
+            onClick={(event) => {
+              event.preventDefault();
+              let list = field.value;
+              list = list.filter((ele, i) => i != lessonMap[value]);
+              field.onChange(list);
+            }}
+          >
             Delete
           </Button>
         </div>
@@ -210,11 +220,24 @@ function LessonEditForm({ field, value: id, close, toast }) {
             <FormItem>
               <FormLabel>Lesson Type</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Lesson Type"
-                  className="border-2 bg-[#0003]"
-                  {...field}
-                />
+                <Select
+                  onValueChange={(event) => {
+                    form.setValue("data", "");
+                    field.onChange(event);
+                  }}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger className="border-2 bg-[#0003] capitalize">
+                    <SelectValue placeholder="Lesson Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {data.lessonTypes.map((ele, id) => (
+                      <SelectItem key={id} value={ele} className="capitalize">
+                        {ele}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -230,7 +253,13 @@ function LessonEditForm({ field, value: id, close, toast }) {
                 <Input
                   placeholder="Minutes to Complete Lesson"
                   className="border-2 bg-[#0003]"
+                  type="number"
+                  min={0}
                   {...field}
+                  onChange={(event) => {
+                    let data = parseInt(event.target.value || 0);
+                    field.onChange(data);
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -240,18 +269,12 @@ function LessonEditForm({ field, value: id, close, toast }) {
         <FormField
           control={form.control}
           name="data"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Lesson Data</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Lesson Data"
-                  className="border-2 bg-[#0003]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+          render={(props) => (
+            <LessonDataEditForm
+              lessonType={form.getValues().type}
+              toast={toast}
+              {...props}
+            />
           )}
         />
         <Button
