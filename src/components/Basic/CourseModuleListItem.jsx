@@ -13,6 +13,9 @@ import {
   ChevronUpIcon,
   MenuSquareIcon,
 } from "lucide-react";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function CourseModuleListItem({
   className,
@@ -24,6 +27,7 @@ export default function CourseModuleListItem({
   ...props
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { id: courseId } = useParams();
 
   return (
     <Collapsible onOpenChange={setIsOpen} {...props}>
@@ -44,8 +48,17 @@ export default function CourseModuleListItem({
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="p-2 space-y-4">
-        <TypographyP>{description}</TypographyP>
-        <TypographyH4 className="text-lg">What's included</TypographyH4>
+        <div className="flex">
+          <div className="grow space-y-4">
+            <TypographyP>{description}</TypographyP>
+            <TypographyH4 className="text-lg">What's included</TypographyH4>
+          </div>
+          <div className="flex flex-col">
+            <Button asChild variant="secondary">
+              <Link href={`./${courseId}/${id}`}>Read</Link>
+            </Button>
+          </div>
+        </div>
         <LessonsIncluded lessons={lessons} />
       </CollapsibleContent>
     </Collapsible>

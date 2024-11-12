@@ -1,6 +1,9 @@
+import CourseImg from "@/assets/Course.webp";
+import CourseCardImg from "@/assets/course-image.png";
+
 export const data = {
-  defaultCourseTitleImg:
-    "https://foundr.com/wp-content/uploads/2023/04/How-to-create-an-online-course.jpg.webp",
+  defaultCourseTitleImg: CourseImg,
+  defaultCourseCardImg: CourseCardImg,
   defaultUserProfileImg: "https://github.com/shadcn.png",
   lessonTypes: ["reading", "quiz"],
 };

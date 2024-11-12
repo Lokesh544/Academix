@@ -25,7 +25,7 @@ export default function Course({ id }) {
     about: "-----",
     description: "------",
     expectedTime: "----",
-    imageUrl: "---",
+    imageUrl: "",
     name: "----",
     price: "---",
     rating: 1,
@@ -58,7 +58,7 @@ export default function Course({ id }) {
             course.instructor = {
               name: "",
               about: "",
-              img: "",
+              img: data.defaultUserProfileImg,
               role: 1,
             };
             course.students = 0;

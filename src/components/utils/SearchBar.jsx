@@ -23,7 +23,7 @@ export const SearchBarInput = React.forwardRef(
     return (
       <Input
         className={cn(
-          "bg-foreground font-bold lg:text-lg text-primary-foreground rounded-lg",
+          "bg-foreground font-bold lg:text-lg text-secondary-foreground rounded-lg",
           className
         )}
         ref={ref}

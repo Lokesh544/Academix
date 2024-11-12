@@ -10,59 +10,7 @@ import { localdata } from "@/localdata";
 import { useEffect, useState } from "react";
 
 export default function Courses({ search }) {
-  const [courses, setCourses] = useState([
-    {
-      instructor: {
-        name: "Ebou Jobe",
-        about: "Developer",
-        img: "https://github.com/shadcn.png",
-        role: 1,
-      },
-      id: 231234,
-      rating: 3,
-      students: 100,
-    },
-    {
-      instructor: {
-        name: "Ebou Jobe",
-        about: "Developer",
-        role: 1,
-      },
-      id: 231234,
-      rating: 3,
-      students: 100,
-    },
-    {
-      instructor: {
-        name: "Ebou Jobe",
-        about: "Developer",
-        role: 1,
-      },
-      id: 231234,
-      rating: 3,
-      students: 100,
-    },
-    {
-      instructor: {
-        name: "Ebou Jobe",
-        about: "Developer",
-        role: 1,
-      },
-      id: 231234,
-      rating: 3,
-      students: 100,
-    },
-    {
-      instructor: {
-        name: "Ebou Jobe",
-        about: "Developer",
-        role: 1,
-      },
-      id: 231234,
-      rating: 3,
-      students: 100,
-    },
-  ]);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     if (typeof window != "undefined") {
@@ -74,6 +22,7 @@ export default function Courses({ search }) {
         })
         .then(async (courses) => {
           for (let i in courses) {
+            courses[i].data = JSON.parse(courses[i].data);
             courses[i].instructor = await getUser(
               localdata.username(),
               localdata.password(),
@@ -96,15 +45,18 @@ export default function Courses({ search }) {
     }
   }, []);
 
-  console.log(courses);
-
   return (
-    <div>
+    <div className="min-h-[calc(100vh-20rem)]">
       <TypographyH1 className="capitalize text-center my-8">
-        courses
+        Courses
       </TypographyH1>
       <SearchBar />
-      <CardRender data={courses} ItemRender={CourseCard} className="my-16" />
+      <CardRender
+        data={courses}
+        ItemRender={CourseCard}
+        className="my-16"
+        placeholder="No Course Found"
+      />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
+import { TypographyH3 } from "../ui/typography";
 
 /**
  *
- * @param {{data: object, ItemRender: React.JSXElementConstructor, children?: React.JSX.Element | string, className?: string | object, placeholder: string, props}} props
+ * @param {{data: object, ItemRender: React.JSXElementConstructor, children?: React.JSX.Element | string, className?: string | object, placeholder: string | React.JSX.Element, props}} props
  * @returns
  */
 export default function CardRender({
@@ -22,9 +23,13 @@ export default function CardRender({
       {...props}
     >
       {children}
-      {typeof data != "undefined"
-        ? data.map((ele, id) => <ItemRender key={id} id={id} {...ele} />)
-        : placeholder}
+      {typeof data != "undefined" && data.length > 0 ? (
+        data.map((ele, id) => <ItemRender key={id} id={id} {...ele} />)
+      ) : typeof placeholder == "object" ? (
+        placeholder
+      ) : (
+        <TypographyH3>{placeholder}</TypographyH3>
+      )}
     </div>
   );
 }

@@ -20,7 +20,7 @@ const CourseData = [
       role: 1,
     },
     id: 231234,
-    stars: 3,
+    rating: 3,
     students: 100,
   },
   {
@@ -30,7 +30,7 @@ const CourseData = [
       role: 1,
     },
     id: 231234,
-    stars: 3,
+    rating: 3,
     students: 100,
   },
   {
@@ -40,7 +40,7 @@ const CourseData = [
       role: 1,
     },
     id: 231234,
-    stars: 3,
+    rating: 3,
     students: 100,
   },
   {
@@ -50,7 +50,7 @@ const CourseData = [
       role: 1,
     },
     id: 231234,
-    stars: 3,
+    rating: 3,
     students: 100,
   },
   {
@@ -60,7 +60,7 @@ const CourseData = [
       role: 1,
     },
     id: 231234,
-    stars: 3,
+    rating: 3,
     students: 100,
   },
 ];

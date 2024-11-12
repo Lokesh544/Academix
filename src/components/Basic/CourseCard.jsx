@@ -5,8 +5,8 @@ import { Badge } from "../ui/badge";
 import UserAvatar from "../utils/UserAvatar";
 import StarIcon from "../utils/StarIcon";
 import { Button } from "../ui/button";
-import CourseImg from "@/assets/course-image.png";
 import Link from "next/link";
+import { data } from "@/data";
 
 /**
  *
@@ -16,9 +16,17 @@ import Link from "next/link";
 export default function CourseCard({
   className,
   instructor,
-  id,
+  _id,
   rating,
   students,
+  data: courseData,
+  about,
+  description,
+  expectedTime,
+  imageUrl,
+  name,
+  price,
+  userId,
   ...props
 }) {
   return (
@@ -26,20 +34,34 @@ export default function CourseCard({
       className="bg-background-200 rounded-2xl border-2 w-80 h-[30rem] hover:scale-105 transition-transform"
       {...props}
     >
-      <Image src={CourseImg} alt="Course" />
+      <Image
+        src={
+          imageUrl && imageUrl != ""
+            ? praseHttps(imageUrl)
+            : data.defaultCourseCardImg
+        }
+        alt="Course"
+      />
       <div className="m-4 flex flex-col gap-y-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-1">
-            <div className="rounded-full grid place-items-center bg-secondary-200 p-1">
-              <PlayIcon size={24} />
-            </div>
-            10x Lectures
+            <Link
+              href={`/course/${_id}/`}
+              className="rounded-full grid place-items-center bg-secondary-200 p-[6px] hover:bg-secondary-200/80"
+            >
+              <PlayIcon size={20} />
+            </Link>
+            {courseData?.modules ? courseData.modules.length : 0}
+            {"x "}
+            {courseData?.modules && courseData.modules.length > 1
+              ? "Modules"
+              : "Module"}
           </div>
           <Badge variant={"secondary"} className="text-secondary-foreground">
             Default
           </Badge>
         </div>
-        <div className="font-bold tracking-widest text-sm">React Static</div>
+        <div className="font-bold tracking-widest text-sm">{name}</div>
         <div className="flex items-center justify-between py-4 border-y-2 border-y-primary-foreground">
           <div className="flex items-center gap-1">
             <UserAvatar user={instructor} fallbackClassName="bg-transparent" />
@@ -70,7 +92,7 @@ export default function CourseCard({
             asChild
             className="bg-secondary-200 hover:bg-secondary-200/80"
           >
-            <Link href={`/course/${id}/`}>Enroll Now</Link>
+            <Link href={`/course/${_id}/`}>Enroll Now</Link>
           </Button>
         </div>
       </div>
