@@ -34,6 +34,7 @@ export const POST = TryCatch(async (req) => {
   if (req.data.imageUrl) {
     course.imageUrl = req.data.imageUrl;
   }
-  // [ ] await course.save();
+  // [ ]
+  await course.save();
   return NextResponse.json({ success: true });
 });

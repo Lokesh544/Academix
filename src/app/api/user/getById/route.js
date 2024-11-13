@@ -10,5 +10,7 @@ export const POST = TryCatch(async (req) => {
   await getData(req);
   await authorizeUser(req);
 
-  return NextResponse.json({ user: req.data.user });
+  const user = await User.findById(req.data.userId);
+
+  return NextResponse.json({ user });
 });

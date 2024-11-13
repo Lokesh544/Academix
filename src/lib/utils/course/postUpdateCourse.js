@@ -41,7 +41,12 @@ export default async function postUpdateCourse({
       expectedTime,
       data,
     }),
-  });
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res?.success) return res.success;
+      else throw new Error(res.error);
+    });
 
   return res;
 }

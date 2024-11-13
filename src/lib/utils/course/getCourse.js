@@ -1,4 +1,3 @@
-// [ ] Check
 /**
  * @returns Finds and return the Course from the courseId
  *
@@ -14,7 +13,12 @@ export default async function getCourse(courseId, username, userpassword) {
       userpassword,
       courseId,
     }),
-  });
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.course) return res.course;
+      else throw Error(res.error);
+    });
 
   return res;
 }

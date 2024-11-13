@@ -2,7 +2,7 @@
 
 import { Button } from "../ui/button";
 import Link from "next/link";
-import LoginDialog from "../login/LoginDialog";
+import LoginDialog from "../profile/LoginDialog";
 import { useEffect, useState } from "react";
 import UserAvatar from "../utils/UserAvatar";
 import {
@@ -11,7 +11,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import Logout, { logout } from "../login/logout";
+import Logout, { logout } from "../profile/logout";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
+import { data } from "@/data";
+import { TypographyH4, TypographyP } from "../ui/typography";
+import ProfileEditDialogForm from "../profile/ProfileEditDialogForm";
+import { localdata } from "@/localdata";
+import getUser from "@/lib/utils/user/getUser";
 
 const links = [
   { label: "home", link: "/" },
@@ -30,15 +45,15 @@ export default function NavBar() {
 
   useEffect(() => {
     if (typeof window != "undefined") {
-      // TODO
-      const user = {
-        name: "Ebou Jobe",
-        about: "Developer",
-        img: "https://github.com/shadcn.png",
-        role: 1,
-      };
-      if (window.localStorage.getItem("username")) setUser(user);
-      else setUser(undefined);
+      if (localdata.username() && localdata.password()) {
+        getUser(localdata.username(), localdata.password())
+          .then((user) => {
+            setUser(user);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   }, []);
 
@@ -65,28 +80,66 @@ export default function NavBar() {
               ))}
             </div>
             {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <UserAvatar user={user} />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {profileLinks.map(
-                    (ele, id) =>
-                      ele.role <= user.role && (
-                        <DropdownMenuItem
-                          key={id}
-                          asChild
-                          className="capitalize"
-                        >
-                          <Link href={ele.link}>{ele.label}</Link>
-                        </DropdownMenuItem>
-                      )
-                  )}
-                  <DropdownMenuItem onClick={logout}>
-                    <Logout />
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Drawer>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <UserAvatar user={user} />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {profileLinks.map(
+                      (ele, id) =>
+                        ele.role <= user.role && (
+                          <DropdownMenuItem
+                            key={id}
+                            asChild
+                            className="capitalize"
+                          >
+                            <Link href={ele.link}>{ele.label}</Link>
+                          </DropdownMenuItem>
+                        )
+                    )}
+                    <DropdownMenuItem asChild>
+                      <DrawerTrigger className="w-full">Profile</DrawerTrigger>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={logout}>
+                      <Logout />
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <DrawerTitle className="hidden">Profile</DrawerTitle>
+                    <DrawerDescription asChild>
+                      <div className="flex justify-center text-primary gap-8">
+                        <UserAvatar
+                          className="w-40 h-40"
+                          fallbackClassName="text-3xl"
+                          user={user}
+                        />
+                        <div className="w-3/5 flex flex-col justify-center">
+                          <TypographyH4>{user.name}</TypographyH4>
+                          <TypographyP>
+                            {user.about}
+                            <br />
+                            Role: {data.userRoles[parseInt(user.role)]}
+                          </TypographyP>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                          <ProfileEditDialogForm
+                            user={user}
+                            setUser={setUser}
+                          />
+                        </div>
+                      </div>
+                    </DrawerDescription>
+                  </DrawerHeader>
+                  <DrawerFooter>
+                    <DrawerClose asChild className="w-fit px-8 self-center">
+                      <Button variant="secondary">Close</Button>
+                    </DrawerClose>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
             ) : (
               <LoginDialog
                 trigger={

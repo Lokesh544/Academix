@@ -19,7 +19,7 @@ export default function LoginDialog({ trigger }) {
       )}
       <DialogContent>
         <DialogTitle />
-        <DialogDescription>
+        <DialogDescription asChild>
           <Tabs defaultValue="login">
             <TabsList className="w-full">
               <TabsTrigger value="login" className="grow">
@@ -29,10 +29,10 @@ export default function LoginDialog({ trigger }) {
                 Sign Up
               </TabsTrigger>
             </TabsList>
-            <TabsContent value="login">
+            <TabsContent value="login" asChild>
               <Login />
             </TabsContent>
-            <TabsContent value="signUp">
+            <TabsContent value="signUp" asChild>
               <SignUp />
             </TabsContent>
           </Tabs>

@@ -1,16 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 /**
  *
- * @param {{user: {img: string | URL, name: string}, ImageClassName?: string | object, fallbackClassName?: string | object}} props
+ * @param {{user: {img: string | URL, name: string}, className?: string | object, ImageClassName?: string | object, fallbackClassName?: string | object}} props
  * @returns
  */
 export default function UserAvatar({
   user,
+  className,
   fallbackClassName,
   ImageClassName,
 }) {
   return (
-    <Avatar>
+    <Avatar className={className}>
       <AvatarImage src={user.img} className={ImageClassName} />
       <AvatarFallback className={fallbackClassName}>
         {user.name

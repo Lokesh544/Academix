@@ -13,7 +13,7 @@ import UserAvatar from "@/components/utils/UserAvatar";
 import { data } from "@/data";
 import { praseHttps, praseNumberToString } from "@/lib/utils";
 import getCourse from "@/lib/utils/course/getCourse";
-import getUser from "@/lib/utils/user/getUser";
+import getUserFromId from "@/lib/utils/user/getUserFromId";
 import getUserId from "@/lib/utils/user/getUserId";
 import { localdata } from "@/localdata";
 import Image from "next/image";
@@ -49,11 +49,6 @@ export default function Course({ id }) {
     if (typeof window != "undefined") {
       (async () => {
         await getCourse(id, localdata.username(), localdata.password())
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.course) return res.course;
-            else throw Error(res.error);
-          })
           .then(async (course) => {
             course.instructor = {
               name: "",
@@ -64,16 +59,11 @@ export default function Course({ id }) {
             course.students = 0;
             course.data = JSON.parse(course.data);
             setCourse(course);
-            await getUser(
+            await getUserFromId(
               localdata.username(),
               localdata.password(),
               course.userId
             )
-              .then((res) => res.json())
-              .then((res) => {
-                if (res.user) return res.user;
-                else throw Error(res.error);
-              })
               .then((user) => {
                 const newC = course;
                 newC.instructor = user;
@@ -88,11 +78,6 @@ export default function Course({ id }) {
             console.log(err);
           });
         await getUserId(localdata.username(), localdata.password())
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.userId) return res.userId;
-            else throw Error(res.error);
-          })
           .then((userId) => {
             setUserId(userId);
           })

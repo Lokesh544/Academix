@@ -46,11 +46,6 @@ export default function EditCourseForm({ id }) {
     if (typeof window != "undefined") {
       (async () => {
         await getCourse(id, localdata.username(), localdata.password())
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.course) return res.course;
-            else throw Error(res.error);
-          })
           .then((course) => {
             const data = JSON.parse(course.data);
             form.setValue("modules", data.modules);
@@ -63,7 +58,6 @@ export default function EditCourseForm({ id }) {
     }
   }, []);
 
-  // TODO
   async function onSubmit(values) {
     const data = JSON.stringify(values);
     await postUpdateCourse({
@@ -72,11 +66,6 @@ export default function EditCourseForm({ id }) {
       courseId: id,
       data: data,
     })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res?.success) return res.success;
-        else throw new Error(res.error);
-      })
       .then((success) => {
         toast({
           description: `Course Updated Successfully 🎉`,

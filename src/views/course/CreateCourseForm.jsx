@@ -55,11 +55,6 @@ export default function CreateCourseForm() {
       price: values.price,
       expectedTime: values.expectedTime,
     })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res?.course) return res.course;
-        else throw new Error(res.error);
-      })
       .then((course) => {
         console.log(course);
         toast({

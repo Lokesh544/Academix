@@ -35,7 +35,12 @@ export default async function postCreateCourse({
       price,
       expectedTime,
     }),
-  });
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res?.course) return res.course;
+      else throw new Error(res.error);
+    });
 
   return res;
 }

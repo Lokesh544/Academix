@@ -6,6 +6,7 @@ export const data = {
   defaultCourseCardImg: CourseCardImg,
   defaultUserProfileImg: "https://github.com/shadcn.png",
   lessonTypes: ["reading", "quiz"],
+  userRoles: ["Student", "Instructor"],
 };
 
 // 672c429c2c851b9e31f22193

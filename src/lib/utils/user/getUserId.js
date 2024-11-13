@@ -1,4 +1,3 @@
-// [ ] Check
 /**
  * @returns Finds and return the UserId from the User
  *
@@ -12,7 +11,12 @@ export default async function getUserId(username, userpassword) {
       username,
       userpassword,
     }),
-  });
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.userId) return res.userId;
+      else throw Error(res.error);
+    });
 
   return res;
 }

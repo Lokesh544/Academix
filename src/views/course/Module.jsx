@@ -41,11 +41,6 @@ export default function Module({ id, module }) {
     if (typeof window != "undefined") {
       (async () => {
         await getCourse(id, localdata.username(), localdata.password())
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.course) return res.course;
-            else throw Error(res.error);
-          })
           .then(async (course) => {
             course.instructor = {
               name: "",

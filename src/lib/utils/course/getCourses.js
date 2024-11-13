@@ -1,4 +1,3 @@
-// [ ] Check
 /**
  * @returns Finds and return a List of Courses
  *
@@ -14,7 +13,12 @@ export default async function getCourses(username, userpassword, search) {
       userpassword,
       search,
     }),
-  });
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.courses) return res.courses;
+      else throw Error(res.error);
+    });
 
   return res;
 }

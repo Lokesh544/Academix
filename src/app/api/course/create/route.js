@@ -20,6 +20,7 @@ export const POST = TryCatch(async (req) => {
     expectedTime: req.data.expectedTime,
   });
 
-  //[ ] await course.save();
+  //[ ]
+  await course.save();
   return NextResponse.json({ course });
 });

@@ -5,7 +5,7 @@ import { TypographyH1 } from "@/components/ui/typography";
 import CardRender from "@/components/utils/CardRender";
 import SearchBar from "@/components/utils/SearchBar";
 import getCourses from "@/lib/utils/course/getCourses";
-import getUser from "@/lib/utils/user/getUser";
+import getUserFromId from "@/lib/utils/user/getUserFromId";
 import { localdata } from "@/localdata";
 import { useEffect, useState } from "react";
 
@@ -15,24 +15,14 @@ export default function Courses({ search }) {
   useEffect(() => {
     if (typeof window != "undefined") {
       getCourses(localdata.username(), localdata.password(), search)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.courses) return res.courses;
-          else throw Error(res.error);
-        })
         .then(async (courses) => {
           for (let i in courses) {
             courses[i].data = JSON.parse(courses[i].data);
-            courses[i].instructor = await getUser(
+            courses[i].instructor = await getUserFromId(
               localdata.username(),
               localdata.password(),
               courses[i].userId
-            )
-              .then((res) => res.json())
-              .then((res) => {
-                if (res.user) return res.user;
-                else throw Error(res.error);
-              });
+            );
             // TODO
             courses[i].stars = 2;
             courses[i].students = 100;

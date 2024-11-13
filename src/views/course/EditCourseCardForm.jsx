@@ -49,11 +49,6 @@ export default function EditCourseCardForm({ id }) {
     if (typeof window != "undefined") {
       (async () => {
         await getCourse(id, localdata.username(), localdata.password())
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.course) return res.course;
-            else throw Error(res.error);
-          })
           .then((course) => {
             form.setValue("name", course.name);
             form.setValue("about", course.about);
@@ -81,11 +76,6 @@ export default function EditCourseCardForm({ id }) {
       price: values.price,
       expectedTime: values.expectedTime,
     })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res?.success) return res.success;
-        else throw new Error(res.error);
-      })
       .then((success) => {
         toast({
           description: `Course Updated Successfully 🎉`,
