@@ -13,7 +13,7 @@ export default function LessonView1({
   lessonId,
 }) {
   const [submit, setSubmit] = useState(false);
-  data = JSON.parse(data);
+  data = JSON.parse(data ? data : "[]");
   console.log("Data", data);
 
   return (
@@ -25,6 +25,7 @@ export default function LessonView1({
         </TypographyP>
       </div>
       <div>
+        {data.length == 0 && <TypographyH3>No Question Found!</TypographyH3>}
         {data.map((q, questionId) => (
           <div key={questionId}>
             <TypographyH3>{q.question}</TypographyH3>

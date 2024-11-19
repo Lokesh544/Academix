@@ -36,6 +36,7 @@ export default function Module({ id, module }) {
   });
   const [loading, setLoading] = useState(true);
   const [lesson, setLesson] = useState(0);
+  module = Number.parseInt(module);
 
   useEffect(() => {
     if (typeof window != "undefined") {
@@ -67,8 +68,8 @@ export default function Module({ id, module }) {
   function onClickPreviousLesson() {
     if (lesson > 0) setLesson(lesson - 1);
   }
-  const nextModuleHref = `./${id}/${module + 1}`;
-  const previousModuleHref = `./${id}/${module - 1}`;
+  const nextModuleHref = `../${id}/${module + 1}`;
+  const previousModuleHref = `../${id}/${module - 1}`;
 
   return (
     <div className="min-h-[calc(100vh-20rem)] flex flex-col pt-6">
@@ -96,20 +97,23 @@ export default function Module({ id, module }) {
               </Button>
             ) : module > 0 ? (
               <Button asChild variant="secondary">
-                <Link href={nextModuleHref}>
+                <Link href={previousModuleHref}>
                   <ArrowBigLeftIcon /> Previous Module
                 </Link>
               </Button>
             ) : (
               <div />
             )}
+            <Button asChild variant="secondary">
+              <Link href={"."}>Go Back to Course</Link>
+            </Button>
             {lesson + 1 < course.data.modules[module].lessons.length ? (
               <Button variant="secondary" onClick={onClickNextLesson}>
                 Next <ArrowBigRightIcon />
               </Button>
             ) : module + 1 < course.data.modules.length ? (
               <Button asChild variant="secondary">
-                <Link href={previousModuleHref}>
+                <Link href={nextModuleHref}>
                   Next Module <ArrowBigRightIcon />
                 </Link>
               </Button>
