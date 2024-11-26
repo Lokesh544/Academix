@@ -265,6 +265,7 @@ function ModuleEditForm({ field, value: id, close, toast }) {
               <FormLabel>Module Description</FormLabel>
               <FormControl>
                 <Textarea
+                  rows={10}
                   placeholder="Module Description"
                   className="border-2 bg-[#0003]"
                   {...module_field}

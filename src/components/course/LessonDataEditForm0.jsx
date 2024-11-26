@@ -86,6 +86,7 @@ export function LessonDataEditForm0({ field, toast }) {
               <FormItem>
                 <FormControl>
                   <Textarea
+                    rows={10}
                     placeholder="Content"
                     className="border-2 bg-[#0003]"
                     {...field}
