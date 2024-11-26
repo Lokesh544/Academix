@@ -32,6 +32,7 @@ export default function LessonView1({
             <RadioGroup className="my-4 space-y-2">
               {q.options.map((option, optionId) => (
                 <div
+                  key={optionId}
                   className={cn(
                     "flex items-center gap-x-2 rounded p-1 border-secondary-200",
                     submit && optionId == q.right && "border-2"
