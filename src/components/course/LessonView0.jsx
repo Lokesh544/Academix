@@ -1,3 +1,4 @@
+import { textToParagraph } from "@/lib/utils";
 import { TypographyH1, TypographyH3, TypographyP } from "../ui/typography";
 
 export default function LessonView0({
@@ -18,12 +19,7 @@ export default function LessonView0({
         {data.map((ele, id) => (
           <div key={id}>
             <TypographyH3>{ele.title}</TypographyH3>
-            <TypographyP>
-              {ele.content.split("\n").flatMap((ele, i, arr) => {
-                if (arr.length - 1 != i) return [ele, <br />];
-                else return ele;
-              })}
-            </TypographyP>
+            <TypographyP>{textToParagraph(ele.content)}</TypographyP>
             {id + 1 != data.length && (
               <div className="border border-border/30 mt-4 mb-6" />
             )}

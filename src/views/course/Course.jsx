@@ -11,7 +11,7 @@ import {
 import ListRender from "@/components/utils/ListRender";
 import UserAvatar from "@/components/utils/UserAvatar";
 import { data } from "@/data";
-import { praseHttps, praseNumberToString } from "@/lib/utils";
+import { praseHttps, praseNumberToString, textToParagraph } from "@/lib/utils";
 import getCourse from "@/lib/utils/course/getCourse";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
 import getUserId from "@/lib/utils/user/getUserId";
@@ -144,7 +144,7 @@ export default function Course({ id }) {
         </div>
       )}
       <div>
-        <TypographyP>{course.description}</TypographyP>
+        <TypographyP>{textToParagraph(course.description)}</TypographyP>
       </div>
       <div>
         <TypographyH2>

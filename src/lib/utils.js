@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { string } from "zod";
 
 /**
  *
@@ -34,4 +35,16 @@ export function praseNumberToString(number) {
     i -= 3;
   }
   return res;
+}
+
+/**
+ *
+ * @param {string} string
+ * @returns
+ */
+export function textToParagraph(string) {
+  return string.split("\n").flatMap((ele, i, arr) => {
+    if (arr.length - 1 != i) return [ele, <br />];
+    else return ele;
+  });
 }

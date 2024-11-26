@@ -16,6 +16,7 @@ import {
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { textToParagraph } from "@/lib/utils";
 
 export default function CourseModuleListItem({
   className,
@@ -50,7 +51,7 @@ export default function CourseModuleListItem({
       <CollapsibleContent className="p-2 space-y-4">
         <div className="flex">
           <div className="grow space-y-4">
-            <TypographyP>{description}</TypographyP>
+            <TypographyP>{textToParagraph(description)}</TypographyP>
             <TypographyH4 className="text-lg">What's included</TypographyH4>
           </div>
           <div className="flex flex-col">
