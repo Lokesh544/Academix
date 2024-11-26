@@ -18,11 +18,14 @@ export default function LessonView0({
         {data.map((ele, id) => (
           <div key={id}>
             <TypographyH3>{ele.title}</TypographyH3>
-            <TypographyP>{ele.content}</TypographyP>
+            <TypographyP>
+              {ele.content.split("\n").flatMap((ele, i, arr) => {
+                if (arr.length - 1 != i) return [ele, <br />];
+                else return ele;
+              })}
+            </TypographyP>
             {id + 1 != data.length && (
-              <>
-                <div className="border border-border/30 mt-4 mb-6" />
-              </>
+              <div className="border border-border/30 mt-4 mb-6" />
             )}
           </div>
         ))}
