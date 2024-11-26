@@ -7,6 +7,7 @@ import StarIcon from "../utils/StarIcon";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { data } from "@/data";
+import { praseHttps } from "@/lib/utils";
 
 /**
  *
@@ -31,7 +32,7 @@ export default function CourseCard({
 }) {
   return (
     <Card
-      className="bg-background-200 rounded-2xl border-2 w-80 h-[30rem] hover:scale-105 transition-transform"
+      className="bg-background-200 rounded-2xl border-2 w-80 hover:scale-105 transition-transform"
       {...props}
     >
       <Image
@@ -40,6 +41,9 @@ export default function CourseCard({
             ? praseHttps(imageUrl)
             : data.defaultCourseCardImg
         }
+        className="rounded-t-2xl"
+        width={640}
+        height={640 * 2}
         alt="Course"
       />
       <div className="m-4 flex flex-col gap-y-6">
