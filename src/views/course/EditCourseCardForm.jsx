@@ -210,7 +210,7 @@ export default function EditCourseCardForm({ id }) {
               </FormItem>
             )}
           />
-          <div className="flex gap-4 justify-center">
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
             <Button variant="secondary" type="submit">
               Submit
             </Button>

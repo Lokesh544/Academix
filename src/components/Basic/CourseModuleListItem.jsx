@@ -16,7 +16,7 @@ import {
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { textToParagraph } from "@/lib/utils";
+import { cn, textToParagraph } from "@/lib/utils";
 
 export default function CourseModuleListItem({
   className,
@@ -34,15 +34,21 @@ export default function CourseModuleListItem({
     <Collapsible onOpenChange={setIsOpen} {...props}>
       <CollapsibleTrigger className="flex justify-between items-center p-2 w-full hover:bg-secondary-200/30 rounded group">
         <div>
-          <TypographyH4 className="text-left">{name}</TypographyH4>
+          <TypographyH4 className="max-md:text-base text-left">
+            {name}
+          </TypographyH4>
           <div className="flex items-center text-xs">
-            <p>Module {id + 1}</p>
+            <p className="hidden md:block">Module {id + 1}</p>
             <div className="rounded-full w-1 h-1 bg-black mx-2" />
             <p>{hours} hours to complete</p>
           </div>
         </div>
         <div className="flex items-center">
-          <TypographyP className={isOpen ? "" : "group-hover:block hidden"}>
+          <TypographyP
+            className={
+              isOpen ? "hidden md:block" : "group-hover:md:block hidden"
+            }
+          >
             More Details
           </TypographyP>
           {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -51,16 +57,23 @@ export default function CourseModuleListItem({
       <CollapsibleContent className="p-2 space-y-4">
         <div className="flex">
           <div className="grow space-y-4">
-            <TypographyP>{textToParagraph(description)}</TypographyP>
+            <TypographyP className="max-md:text-sm">
+              {textToParagraph(description)}
+            </TypographyP>
             <TypographyH4 className="text-lg">What's included</TypographyH4>
           </div>
-          <div className="flex flex-col">
+          <div className="hidden md:flex flex-col">
             <Button asChild variant="secondary">
               <Link href={`./${courseId}/${id}`}>Read</Link>
             </Button>
           </div>
         </div>
         <LessonsIncluded lessons={lessons} />
+        <div className="flex md:hidden flex-col">
+          <Button asChild variant="secondary">
+            <Link href={`./${courseId}/${id}`}>Read</Link>
+          </Button>
+        </div>
       </CollapsibleContent>
     </Collapsible>
   );
@@ -105,6 +118,8 @@ function LessonsIncluded({ lessons }) {
   }
 
   return (
-    <div className="flex gap-6">{items.length > 0 ? items : "Nothing"}</div>
+    <div className="flex flex-wrap gap-x-6 gap-y-3">
+      {items.length > 0 ? items : "Nothing"}
+    </div>
   );
 }

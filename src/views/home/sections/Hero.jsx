@@ -9,7 +9,7 @@ export default function Hero() {
     <Section>
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr]">
         <div className="flex justify-between items-center flex-col gap-y-16">
-          <div className="text-3xl lg:text-5xl leading-normal">
+          <div className="text-2xl md:text-3xl lg:text-5xl leading-normal">
             <h3 className="font-bold">
               <span className="text-secondary">
                 Master Frontend & Backend Development:{" "}

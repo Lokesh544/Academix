@@ -61,7 +61,7 @@ export default function LessonsEditForm({ field, toast }) {
     <FormItem>
       <FormLabel>Module Lessons</FormLabel>
       <FormControl>
-        <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -285,7 +285,7 @@ function LessonEditForm({ field, value: id, close, toast }) {
           }}
           variant="secondary"
           type="submit"
-          className="block mx-auto"
+          className="block max-md:w-full mx-auto"
         >
           Update Lesson
         </Button>

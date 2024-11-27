@@ -1,78 +1,49 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import Section from "@/components/wrappers/Section";
-import Image from "next/image";
-import CourseImg from "@/assets/course-image.png";
-import { PlayIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import StarIcon from "@/components/utils/StarIcon";
-import UserAvatar from "@/components/utils/UserAvatar";
 import Link from "next/link";
 import CardRender from "@/components/utils/CardRender";
 import CourseCard from "@/components/basic/CourseCard";
-
-const CourseData = [
-  {
-    instructor: {
-      name: "Ebou Jobe",
-      about: "Developer",
-      img: "https://github.com/shadcn.png",
-      role: 1,
-    },
-    id: 231234,
-    rating: 3,
-    students: 100,
-  },
-  {
-    instructor: {
-      name: "Ebou Jobe",
-      about: "Developer",
-      role: 1,
-    },
-    id: 231234,
-    rating: 3,
-    students: 100,
-  },
-  {
-    instructor: {
-      name: "Ebou Jobe",
-      about: "Developer",
-      role: 1,
-    },
-    id: 231234,
-    rating: 3,
-    students: 100,
-  },
-  {
-    instructor: {
-      name: "Ebou Jobe",
-      about: "Developer",
-      role: 1,
-    },
-    id: 231234,
-    rating: 3,
-    students: 100,
-  },
-  {
-    instructor: {
-      name: "Ebou Jobe",
-      about: "Developer",
-      role: 1,
-    },
-    id: 231234,
-    rating: 3,
-    students: 100,
-  },
-];
+import { useEffect, useState } from "react";
+import getCourses from "@/lib/utils/course/getCourses";
+import { localdata } from "@/localdata";
+import getUserFromId from "@/lib/utils/user/getUserFromId";
 
 export default function Courses() {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    if (typeof window != "undefined") {
+      getCourses()
+        .then(async (courses) => {
+          for (let i in courses) {
+            courses[i].data = JSON.parse(courses[i].data);
+            courses[i].instructor = await getUserFromId(
+              localdata.username(),
+              localdata.password(),
+              courses[i].userId
+            );
+            // TODO
+            courses[i].stars = 2;
+            courses[i].students = 100;
+          }
+          courses = courses.slice(0, 5);
+          setCourses(courses);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
   return (
     <Section>
-      <h3 className="text-5xl font-bold inline-block">
+      <h3 className="text-xl md:text-4xl lg:text-5xl font-bold inline-block">
         Popular
         <span className="text-secondary ml-4">Courses</span>
       </h3>
-      <CardRender data={CourseData} ItemRender={CourseCard} />
+      <CardRender data={courses} ItemRender={CourseCard} />
       <div className="flex justify-center">
         <Button asChild className="bg-secondary hover:bg-secondary/90">
           <Link href="/courses">Explore All Courses</Link>

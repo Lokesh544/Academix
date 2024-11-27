@@ -136,7 +136,7 @@ export function LessonDataEditForm0({ field, toast }) {
                 ))
               )}
               <FormMessage />
-              <div className="w-full flex justify-end gap-2">
+              <div className="w-full flex flex-col md:flex-row justify-end gap-2">
                 <Button
                   onClick={async (event) => {
                     event.preventDefault();

@@ -77,7 +77,7 @@ export default function Features() {
           alt="Stat Image"
           className="hidden lg:flex mx-4"
         />
-        <div className="flex flex-col grow lg:grow-0 gap-10 p-5 items-center justify-center">
+        <div className="hidden md:flex flex-col grow lg:grow-0 gap-10 p-5 items-center justify-center">
           {stats.map((ele, id) => (
             <Stat
               key={id}

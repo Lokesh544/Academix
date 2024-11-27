@@ -48,7 +48,7 @@ export default function Testimonials() {
   const plugin = React.useRef(Autoplay({ stopOnInteraction: true }));
 
   return (
-    <Section>
+    <Section className="hidden md:block">
       <h2 className="text-6xl font-bold text-center my-10">Testimonials</h2>
       <div className="w-2/3 mx-auto">
         <Carousel
