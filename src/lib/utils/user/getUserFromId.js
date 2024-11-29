@@ -5,12 +5,10 @@
  * @param {String} username Logined Username
  * @param {String} userpassword Logined User Password
  */
-export default async function getUserFromId(username, userpassword, userId) {
+export default async function getUserFromId(userId) {
   const res = await fetch("/api/user/getById", {
     method: "POST",
     body: JSON.stringify({
-      username,
-      userpassword,
       userId,
     }),
   })
