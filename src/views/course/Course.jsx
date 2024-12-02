@@ -61,8 +61,6 @@ export default function Course({ id }) {
             course.data = JSON.parse(course.data);
             setCourse(course);
             await getUserFromId(
-              localdata.username(),
-              localdata.password(),
               course.userId
             )
               .then((user) => {

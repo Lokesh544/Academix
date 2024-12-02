@@ -19,8 +19,6 @@ export default function Courses({ search }) {
           for (let i in courses) {
             courses[i].data = JSON.parse(courses[i].data);
             courses[i].instructor = await getUserFromId(
-              localdata.username(),
-              localdata.password(),
               courses[i].userId
             );
             // TODO
