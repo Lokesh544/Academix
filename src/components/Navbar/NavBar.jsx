@@ -62,11 +62,13 @@ export default function NavBar() {
       <nav className="fixed z-20 h-20 bg-background w-full top-0 left-0 p-2">
         <div className="h-full px-5 border-b-2 border-b-primary">
           <div className="h-full max-w-screen-xl mx-auto flex justify-between items-center">
+            <Link href="/" className="h-full flex items-center justify-between">
             <img
               src="/logo.svg"
               alt="Logo"
-              className="rounded-full text-primary my-2 border h-2/3"
+              className="rounded-full text-primary border h-2/3"
             />
+            </Link>
             <div className="hidden md:flex gap-x-4">
               {links.map((ele, id) => (
                 <Button
