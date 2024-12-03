@@ -6,7 +6,7 @@ export default function JoinUs() {
     <Section>
       <div className="flex flex-col md:flex-row justify-center gap-10 items-center">
         <div className="w-9/12">
-          <h3 className="text-2xl lg:text-3xl font-bold leading-relaxed">
+          <h3 className="text-lg md:text-2xl lg:text-3xl font-bold leading-relaxed">
             <span className="text-secondary">
               {"Ready to supercharge your development journey? "}
             </span>

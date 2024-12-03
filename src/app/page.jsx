@@ -8,7 +8,7 @@ import Testimonials from "@/views/home/sections/Testimonials";
 
 export default function Page() {
   return (
-    <main className="max-w-screen-xl h-screen mx-auto px-10">
+    <main className="xl:max-w-screen-xl h-screen mx-auto px-4 md:px-10">
       <NavBar />
       <Hero />
       <Courses />

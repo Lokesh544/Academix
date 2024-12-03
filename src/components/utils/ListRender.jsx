@@ -24,7 +24,9 @@ export default function ListRender({
       {data.map((ele, id) => (
         <>
           <ItemRender key={id} id={id} {...ele} />
-          {dividers && id < data.length - 1 && <Divider />}
+          {dividers && id < data.length - 1 && (
+            <Divider key={data.length + id} />
+          )}
         </>
       ))}
     </div>

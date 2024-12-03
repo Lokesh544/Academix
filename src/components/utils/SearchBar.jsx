@@ -7,7 +7,10 @@ const SearchBar = React.forwardRef(
   ({ className, name = "search", ...props }, ref) => {
     return (
       <form
-        className={cn("flex items-center space-x-2 p-2", className)}
+        className={cn(
+          "flex flex-col md:flex-row items-center space-y-2 space-x-2 p-2",
+          className
+        )}
         {...props}
       >
         <SearchBarInput name={name} ref={ref} />

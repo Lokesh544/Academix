@@ -62,12 +62,14 @@ export default function NavBar() {
       <nav className="fixed z-20 h-20 bg-background w-full top-0 left-0 p-2">
         <div className="h-full px-5 border-b-2 border-b-primary">
           <div className="h-full max-w-screen-xl mx-auto flex justify-between items-center">
+            <Link href="/" className="h-full flex items-center justify-between">
             <img
               src="/logo.svg"
               alt="Logo"
-              className="rounded-full text-primary my-2 border h-2/3"
+              className="rounded-full text-primary border h-2/3"
             />
-            <div className="flex gap-x-4">
+            </Link>
+            <div className="hidden md:flex gap-x-4">
               {links.map((ele, id) => (
                 <Button
                   asChild
@@ -86,6 +88,15 @@ export default function NavBar() {
                     <UserAvatar user={user} />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
+                    {links.map((ele, id) => (
+                      <DropdownMenuItem
+                        key={id}
+                        asChild
+                        className="capitalize md:hidden"
+                      >
+                        <Link href={ele.link}>{ele.label}</Link>
+                      </DropdownMenuItem>
+                    ))}
                     {profileLinks.map(
                       (ele, id) =>
                         ele.role <= user.role && (
@@ -110,19 +121,21 @@ export default function NavBar() {
                   <DrawerHeader>
                     <DrawerTitle className="hidden">Profile</DrawerTitle>
                     <DrawerDescription asChild>
-                      <div className="flex justify-center text-primary gap-8">
-                        <UserAvatar
-                          className="w-40 h-40"
-                          fallbackClassName="text-3xl"
-                          user={user}
-                        />
-                        <div className="w-3/5 flex flex-col justify-center">
-                          <TypographyH4>{user.name}</TypographyH4>
-                          <TypographyP>
-                            {user.about}
-                            <br />
-                            Role: {data.userRoles[parseInt(user.role)]}
-                          </TypographyP>
+                      <div className="flex flex-col md:flex-row justify-center text-primary gap-8">
+                        <div className="w-full md:w-4/5 flex justify-center text-primary gap-8">
+                          <UserAvatar
+                            className="w-20 md:w-40 h-20 md:h-40"
+                            fallbackClassName="text-3xl"
+                            user={user}
+                          />
+                          <div className="w-3/5 flex flex-col justify-center">
+                            <TypographyH4>{user.name}</TypographyH4>
+                            <TypographyP>
+                              {user.about}
+                              <br />
+                              Role: {data.userRoles[parseInt(user.role)]}
+                            </TypographyP>
+                          </div>
                         </div>
                         <div className="flex flex-col justify-center">
                           <ProfileEditDialogForm

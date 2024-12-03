@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import {
   TypographyH1,
   TypographyH2,
+  TypographyH3,
   TypographyH4,
   TypographyP,
 } from "@/components/ui/typography";
 import ListRender from "@/components/utils/ListRender";
 import UserAvatar from "@/components/utils/UserAvatar";
 import { data } from "@/data";
-import { praseHttps, praseNumberToString } from "@/lib/utils";
+import { praseHttps, praseNumberToString, textToParagraph } from "@/lib/utils";
 import getCourse from "@/lib/utils/course/getCourse";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
 import getUserId from "@/lib/utils/user/getUserId";
@@ -60,8 +61,6 @@ export default function Course({ id }) {
             course.data = JSON.parse(course.data);
             setCourse(course);
             await getUserFromId(
-              localdata.username(),
-              localdata.password(),
               course.userId
             )
               .then((user) => {
@@ -88,7 +87,7 @@ export default function Course({ id }) {
     }
   }, []);
 
-  console.log(course);
+  // console.log(course);
 
   return (
     <div className="space-y-6 my-2">
@@ -106,8 +105,9 @@ export default function Course({ id }) {
         />
       </div>
       <div>
-        <TypographyH1>{course.name}</TypographyH1>
-        <TypographyP>{course.about}</TypographyP>
+        <TypographyH1 className="hidden md:block">{course.name}</TypographyH1>
+        <TypographyH3 className="block md:hidden">{course.name}</TypographyH3>
+        <TypographyP className="max-md:text-sm">{course.about}</TypographyP>
         <div className="flex items-center gap-2 my-2">
           <UserAvatar
             user={course.instructor}
@@ -130,7 +130,7 @@ export default function Course({ id }) {
       </div>
       {/* TODO Edit Course Button */}
       {course.userId == userId && (
-        <div className="h idden flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <Link href={`./${id}/edit`}>
             <Button variant="secondary" size="lg">
               <TypographyH4>Edit Course</TypographyH4>
@@ -144,10 +144,12 @@ export default function Course({ id }) {
         </div>
       )}
       <div>
-        <TypographyP>{course.description}</TypographyP>
+        <TypographyP className="max-md:text-sm">
+          {textToParagraph(course.description)}
+        </TypographyP>
       </div>
       <div>
-        <TypographyH2>
+        <TypographyH2 className="max-md:text-lg">
           You have{" "}
           {praseNumberToString(
             course.data?.modules?.length

@@ -5,12 +5,10 @@
  * @param {String} username Logined Username
  * @param {String} userpassword Logined User Password
  */
-export default async function getCourses(username, userpassword, search) {
+export default async function getCourses(search) {
   const res = await fetch("/api/course/list", {
     method: "POST",
     body: JSON.stringify({
-      username,
-      userpassword,
       search,
     }),
   })

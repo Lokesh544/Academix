@@ -68,7 +68,7 @@ export default function ModulesEditForm({ field, toast }) {
     <FormItem>
       <FormLabel>Course Modules</FormLabel>
       <FormControl>
-        <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -209,7 +209,7 @@ function ModuleEditForm({ field, value: id, close, toast }) {
           render={({ field: module_field }) => (
             <FormItem>
               <FormControl>
-                <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
                   <TypographyH2 className="grow">
                     {module_field.value}
                   </TypographyH2>
@@ -265,6 +265,7 @@ function ModuleEditForm({ field, value: id, close, toast }) {
               <FormLabel>Module Description</FormLabel>
               <FormControl>
                 <Textarea
+                  rows={10}
                   placeholder="Module Description"
                   className="border-2 bg-[#0003]"
                   {...module_field}
@@ -310,7 +311,7 @@ function ModuleEditForm({ field, value: id, close, toast }) {
           }}
           variant="secondary"
           type="submit"
-          className="block mx-auto"
+          className="block max-md:w-full mx-auto"
         >
           Update Module
         </Button>

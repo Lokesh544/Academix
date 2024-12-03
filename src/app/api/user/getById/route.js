@@ -8,7 +8,6 @@ import { NextResponse } from "next/server";
 export const POST = TryCatch(async (req) => {
   await dbConnect();
   await getData(req);
-  await authorizeUser(req);
 
   const user = await User.findById(req.data.userId);
 

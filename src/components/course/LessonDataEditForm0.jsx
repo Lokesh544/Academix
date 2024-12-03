@@ -86,6 +86,7 @@ export function LessonDataEditForm0({ field, toast }) {
               <FormItem>
                 <FormControl>
                   <Textarea
+                    rows={10}
                     placeholder="Content"
                     className="border-2 bg-[#0003]"
                     {...field}
@@ -135,7 +136,7 @@ export function LessonDataEditForm0({ field, toast }) {
                 ))
               )}
               <FormMessage />
-              <div className="w-full flex justify-end gap-2">
+              <div className="w-full flex flex-col md:flex-row justify-end gap-2">
                 <Button
                   onClick={async (event) => {
                     event.preventDefault();

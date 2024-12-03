@@ -3,7 +3,7 @@ import LogoBanner from "@/assets/image-Photoroom.png";
 
 export default function Footer() {
   return (
-    <div className="my-4 py-6 border-t-2 border-t-primary-foreground flex justify-around">
+    <div className="my-4 py-6 border-t-2 border-t-primary-foreground flex flex-col md:flex-row justify-around">
       <Image
         src={LogoBanner}
         alt="LogoBanner"

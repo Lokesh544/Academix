@@ -14,13 +14,11 @@ export default function Courses({ search }) {
 
   useEffect(() => {
     if (typeof window != "undefined") {
-      getCourses(localdata.username(), localdata.password(), search)
+      getCourses(search)
         .then(async (courses) => {
           for (let i in courses) {
             courses[i].data = JSON.parse(courses[i].data);
             courses[i].instructor = await getUserFromId(
-              localdata.username(),
-              localdata.password(),
               courses[i].userId
             );
             // TODO

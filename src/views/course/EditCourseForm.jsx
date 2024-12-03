@@ -113,7 +113,7 @@ export default function EditCourseForm({ id }) {
             name="modules"
             render={(props) => <ModulesEditForm toast={toast} {...props} />}
           />
-          <div className="flex gap-4 justify-center">
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
             <Button variant="secondary" type="submit">
               Submit
             </Button>
