@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TypographyH1 } from "@/components/ui/typography";
 import { useToast } from "@/hooks/use-toast";
-import { praseHttps } from "@/lib/utils";
+import { parseHttps } from "@/lib/utils";
 import postCreateCourse from "@/lib/utils/course/postCreateCourse";
 import { localdata } from "@/localdata";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -114,7 +114,7 @@ export default function CreateCourseForm() {
                 <div className="ml-4">
                   {field.value != "" && (
                     <img
-                      src={praseHttps(field.value)}
+                      src={parseHttps(field.value)}
                       className="rounded max-w-80"
                     />
                   )}

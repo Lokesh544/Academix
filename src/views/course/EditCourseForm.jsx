@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TypographyH1 } from "@/components/ui/typography";
 import { useToast } from "@/hooks/use-toast";
-import { praseHttps } from "@/lib/utils";
+import { parseHttps } from "@/lib/utils";
 import getCourse from "@/lib/utils/course/getCourse";
 import postCreateCourse from "@/lib/utils/course/postCreateCourse";
 import postUpdateCourse from "@/lib/utils/course/postUpdateCourse";
@@ -103,7 +103,7 @@ export default function EditCourseForm({ id }) {
                 </FormControl>
                 <FormMessage />
                 {field.value != "" && (
-                  <img src={praseHttps(field.value)} className="rounded" />
+                  <img src={parseHttps(field.value)} className="rounded" />
                 )}
               </FormItem>
             )}

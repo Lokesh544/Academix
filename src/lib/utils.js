@@ -14,9 +14,9 @@ export function cn(...inputs) {
 /**
  *
  * @param {string} link
- * @returns Prased Link
+ * @returns Parsed Link
  */
-export function praseHttps(link) {
+export function parseHttps(link) {
   if (link.slice(0, 8) == "https://" || link.slice(0, 7) == "http://")
     return link;
   else return "https://" + link;
@@ -27,7 +27,7 @@ export function praseHttps(link) {
  * @param {number} number
  * @returns
  */
-export function praseNumberToString(number) {
+export function parseNumberToString(number) {
   let res = number.toString();
   let i = res.length - 1;
   while (i >= 2) {

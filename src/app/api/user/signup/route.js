@@ -15,6 +15,7 @@ export const GET = TryCatch(async (req) => {
     username: data.get("username").toLowerCase(),
     password: data.get("password"),
     name: data.get("username"),
+    role: parseInt(data.get("role")),
   });
   //[ ]
   await user.save();

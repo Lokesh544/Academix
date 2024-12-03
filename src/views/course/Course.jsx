@@ -12,7 +12,7 @@ import {
 import ListRender from "@/components/utils/ListRender";
 import UserAvatar from "@/components/utils/UserAvatar";
 import { data } from "@/data";
-import { praseHttps, praseNumberToString, textToParagraph } from "@/lib/utils";
+import { parseHttps, parseNumberToString, textToParagraph } from "@/lib/utils";
 import getCourse from "@/lib/utils/course/getCourse";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
 import getUserId from "@/lib/utils/user/getUserId";
@@ -60,9 +60,7 @@ export default function Course({ id }) {
             course.students = 0;
             course.data = JSON.parse(course.data);
             setCourse(course);
-            await getUserFromId(
-              course.userId
-            )
+            await getUserFromId(course.userId)
               .then((user) => {
                 const newC = course;
                 newC.instructor = user;
@@ -96,7 +94,7 @@ export default function Course({ id }) {
           className="rounded"
           src={
             course.data.titleImg && course.data.titleImg != ""
-              ? praseHttps(course.data.titleImg)
+              ? parseHttps(course.data.titleImg)
               : data.defaultCourseTitleImg
           }
           alt="Title Img"
@@ -126,7 +124,7 @@ export default function Course({ id }) {
         <Button variant="secondary" size="lg">
           <TypographyH4>Enroll</TypographyH4>
         </Button>
-        <p>{praseNumberToString(course.students)} already enrolled</p>
+        <p>{parseNumberToString(course.students)} already enrolled</p>
       </div>
       {/* TODO Edit Course Button */}
       {course.userId == userId && (
@@ -151,7 +149,7 @@ export default function Course({ id }) {
       <div>
         <TypographyH2 className="max-md:text-lg">
           You have{" "}
-          {praseNumberToString(
+          {parseNumberToString(
             course.data?.modules?.length
               ? course.data?.modules?.length > 0
                 ? course.data.modules.length

@@ -7,7 +7,7 @@ import StarIcon from "../utils/StarIcon";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { data } from "@/data";
-import { praseHttps } from "@/lib/utils";
+import { parseHttps } from "@/lib/utils";
 
 /**
  *
@@ -39,7 +39,7 @@ export default function CourseCard({
         <Image
           src={
             imageUrl && imageUrl != ""
-              ? praseHttps(imageUrl)
+              ? parseHttps(imageUrl)
               : data.defaultCourseCardImg
           }
           className="rounded-t-2xl"
@@ -113,7 +113,7 @@ export default function CourseCard({
           <Image
             src={
               imageUrl && imageUrl != ""
-                ? praseHttps(imageUrl)
+                ? parseHttps(imageUrl)
                 : data.defaultCourseCardImg
             }
             className="rounded-t-2xl"
