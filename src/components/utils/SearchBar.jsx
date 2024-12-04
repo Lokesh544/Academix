@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import React from "react";
 
 const SearchBar = React.forwardRef(
-  ({ className, name = "search", ...props }, ref) => {
+  ({ className, name = "search", defaultValue = "", ...props }, ref) => {
     return (
       <form
         className={cn(
@@ -13,7 +13,7 @@ const SearchBar = React.forwardRef(
         )}
         {...props}
       >
-        <SearchBarInput name={name} ref={ref} />
+        <SearchBarInput name={name} ref={ref} defaultValue={defaultValue} />
         <SearchBarButton label={name} />
       </form>
     );

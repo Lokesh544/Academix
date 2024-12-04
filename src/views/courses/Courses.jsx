@@ -6,11 +6,11 @@ import CardRender from "@/components/utils/CardRender";
 import SearchBar from "@/components/utils/SearchBar";
 import getCourses from "@/lib/utils/course/getCourses";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
-import { localdata } from "@/localdata";
 import { useEffect, useState } from "react";
 
 export default function Courses({ search }) {
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (typeof window != "undefined") {
@@ -18,14 +18,13 @@ export default function Courses({ search }) {
         .then(async (courses) => {
           for (let i in courses) {
             courses[i].data = JSON.parse(courses[i].data);
-            courses[i].instructor = await getUserFromId(
-              courses[i].userId
-            );
+            courses[i].instructor = await getUserFromId(courses[i].userId);
             // TODO
             courses[i].stars = 2;
             courses[i].students = 100;
           }
           setCourses(courses);
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -38,12 +37,12 @@ export default function Courses({ search }) {
       <TypographyH1 className="capitalize text-center my-8">
         Courses
       </TypographyH1>
-      <SearchBar />
+      <SearchBar defaultValue={search} />
       <CardRender
         data={courses}
         ItemRender={CourseCard}
         className="my-16"
-        placeholder="No Course Found"
+        placeholder={loading ? "Loading..." : "No Course Found"}
       />
     </div>
   );

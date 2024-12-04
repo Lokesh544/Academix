@@ -14,7 +14,6 @@ export default function LessonView1({
 }) {
   const [submit, setSubmit] = useState(false);
   data = JSON.parse(data ? data : "[]");
-  console.log("Data", data);
 
   return (
     <div className="space-y-8 mb-8">
