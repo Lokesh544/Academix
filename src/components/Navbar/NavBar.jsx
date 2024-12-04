@@ -63,11 +63,11 @@ export default function NavBar() {
         <div className="h-full px-5 border-b-2 border-b-primary">
           <div className="h-full max-w-screen-xl mx-auto flex justify-between items-center">
             <Link href="/" className="h-full flex items-center justify-between">
-            <img
-              src="/logo.svg"
-              alt="Logo"
-              className="rounded-full text-primary border h-2/3"
-            />
+              <img
+                src="/logo.svg"
+                alt="Logo"
+                className="rounded-full text-primary border h-2/3"
+              />
             </Link>
             <div className="hidden md:flex gap-x-4">
               {links.map((ele, id) => (
@@ -154,13 +154,29 @@ export default function NavBar() {
                 </DrawerContent>
               </Drawer>
             ) : (
-              <LoginDialog
-                trigger={
-                  <Button className="text-secondary-foreground font-bold">
-                    Login
-                  </Button>
-                }
-              />
+              <div className="flex">
+                <LoginDialog
+                  trigger={
+                    <Button className="text-secondary-foreground font-bold">
+                      Login
+                    </Button>
+                  }
+                />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button className="md:hidden ml-2 text-secondary-foreground font-bold">
+                      Menu
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {links.map((ele, id) => (
+                      <DropdownMenuItem key={id} asChild className="capitalize">
+                        <Link href={ele.link}>{ele.label}</Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             )}
           </div>
         </div>
