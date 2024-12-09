@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { TypographyH1 } from "@/components/ui/typography";
 import { data } from "@/data";
 import getCourse from "@/lib/utils/course/getCourse";
+import checkLogin from "@/lib/utils/user/checkLogin";
 import { localdata } from "@/localdata";
 import { ArrowBigLeftIcon, ArrowBigRightIcon } from "lucide-react";
 import Link from "next/link";
@@ -37,6 +38,7 @@ export default function Module({ id, module }) {
   const [loading, setLoading] = useState(true);
   const [lesson, setLesson] = useState(0);
   module = Number.parseInt(module);
+  checkLogin();
 
   useEffect(() => {
     if (typeof window != "undefined") {

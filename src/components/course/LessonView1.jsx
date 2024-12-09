@@ -61,15 +61,17 @@ export default function LessonView1({
         ))}
       </div>
       <div>
-        <Button
-          variant="secondary"
-          className="m-auto block"
-          onClick={() => {
-            setSubmit((ele) => !ele);
-          }}
-        >
-          {submit ? "Hide Answers" : "Show Answers"}
-        </Button>
+        {!submit && (
+          <Button
+            variant="secondary"
+            className="m-auto block"
+            onClick={() => {
+              setSubmit(true);
+            }}
+          >
+            Submit
+          </Button>
+        )}
       </div>
     </div>
   );

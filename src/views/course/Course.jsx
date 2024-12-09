@@ -14,6 +14,7 @@ import UserAvatar from "@/components/utils/UserAvatar";
 import { data } from "@/data";
 import { parseHttps, parseNumberToString, textToParagraph } from "@/lib/utils";
 import getCourse from "@/lib/utils/course/getCourse";
+import checkLogin from "@/lib/utils/user/checkLogin";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
 import getUserId from "@/lib/utils/user/getUserId";
 import { localdata } from "@/localdata";
@@ -45,6 +46,7 @@ export default function Course({ id }) {
     },
   });
   const [userId, setUserId] = useState("");
+  checkLogin();
 
   useEffect(() => {
     if (typeof window != "undefined") {
