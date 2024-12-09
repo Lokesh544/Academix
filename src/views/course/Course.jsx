@@ -12,8 +12,13 @@ import {
 import ListRender from "@/components/utils/ListRender";
 import UserAvatar from "@/components/utils/UserAvatar";
 import { data } from "@/data";
+import { useToast } from "@/hooks/use-toast";
 import { parseHttps, parseNumberToString, textToParagraph } from "@/lib/utils";
 import getCourse from "@/lib/utils/course/getCourse";
+import postCheckEnrolledCourse from "@/lib/utils/course/postCheckEnrolledCourse";
+import postEnrollCourse from "@/lib/utils/course/postEnrollCourse";
+import postEnrollListFromCourse from "@/lib/utils/course/postEnrollListFromCourse";
+import postUnenrollCourse from "@/lib/utils/course/postUnenrollCourse";
 import checkLogin from "@/lib/utils/user/checkLogin";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
 import getUserId from "@/lib/utils/user/getUserId";
@@ -23,6 +28,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Course({ id }) {
+  const { toast } = useToast();
   const [course, setCourse] = useState({
     about: "-----",
     description: "------",
@@ -46,6 +52,7 @@ export default function Course({ id }) {
     },
   });
   const [userId, setUserId] = useState("");
+  const [enrolled, setEnrolled] = useState(false);
   checkLogin();
 
   useEffect(() => {
@@ -59,7 +66,7 @@ export default function Course({ id }) {
               img: data.defaultUserProfileImg,
               role: 1,
             };
-            course.students = 0;
+            course.students = (await postEnrollListFromCourse(id)).length;
             course.data = JSON.parse(course.data);
             setCourse(course);
             await getUserFromId(course.userId)
@@ -71,7 +78,6 @@ export default function Course({ id }) {
               .catch((err) => {
                 console.log(err);
               });
-            // TODO Get number of students
           })
           .catch((err) => {
             console.log(err);
@@ -83,11 +89,62 @@ export default function Course({ id }) {
           .catch((err) => {
             console.log(err);
           });
+        await postCheckEnrolledCourse(
+          id,
+          localdata.username(),
+          localdata.password()
+        )
+          .then((res) => {
+            setEnrolled(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })();
     }
   }, []);
 
-  // console.log(course);
+  async function Enroll() {
+    try {
+      const res = await postEnrollCourse(
+        id,
+        localdata.username(),
+        localdata.password()
+      );
+      setEnrolled(true);
+      const newCourse = course;
+      newCourse.students += 1;
+      setCourse(newCourse);
+      toast({
+        description: "Enrolled Successfully",
+      });
+    } catch (err) {
+      toast({
+        description: err.message,
+      });
+    }
+  }
+
+  async function UnEnroll() {
+    try {
+      const res = await postUnenrollCourse(
+        id,
+        localdata.username(),
+        localdata.password()
+      );
+      setEnrolled(false);
+      const newCourse = course;
+      newCourse.students -= 1;
+      setCourse(newCourse);
+      toast({
+        description: "Unenrolled Successfully",
+      });
+    } catch (err) {
+      toast({
+        description: err.message,
+      });
+    }
+  }
 
   return (
     <div className="space-y-6 my-2">
@@ -121,14 +178,18 @@ export default function Course({ id }) {
           </div>
         </div>
       </div>
-      {/* TODO Enroll Course Button */}
       <div>
-        <Button variant="secondary" size="lg">
-          <TypographyH4>Enroll</TypographyH4>
-        </Button>
+        {enrolled ? (
+          <Button variant="secondary" size="lg" onClick={UnEnroll}>
+            <TypographyH4>Unenroll</TypographyH4>
+          </Button>
+        ) : (
+          <Button variant="secondary" size="lg" onClick={Enroll}>
+            <TypographyH4>Enroll</TypographyH4>
+          </Button>
+        )}
         <p>{parseNumberToString(course.students)} already enrolled</p>
       </div>
-      {/* TODO Edit Course Button */}
       {course.userId == userId && (
         <div className="flex flex-col md:flex-row gap-4">
           <Link href={`./${id}/edit`}>
