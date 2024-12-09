@@ -6,7 +6,6 @@ import getData from "@/lib/db/utils/GetData";
 import TryCatch from "@/lib/db/utils/TryCatch";
 import { NextResponse } from "next/server";
 
-// TODO To complete
 export const POST = TryCatch(async (req) => {
   await dbConnect();
   await getData(req);
@@ -20,14 +19,6 @@ export const POST = TryCatch(async (req) => {
     courseId: course._id,
     userId: req.data.user._id,
   });
-  if (courseEnrollments.length > 0)
-    return NextResponse.json({ enroll: courseEnrollments[0] });
-
-  const courseEnrollment = new CourseEnrollment({
-    courseId: course._id,
-    userId: req.data.user._id,
-  });
-
-  await courseEnrollment.save();
-  return NextResponse.json({ enroll: courseEnrollment });
+  if (courseEnrollments.length > 0) return NextResponse.json({ enroll: true });
+  return NextResponse.json({ enroll: false });
 });

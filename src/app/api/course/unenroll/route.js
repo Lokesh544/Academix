@@ -20,14 +20,9 @@ export const POST = TryCatch(async (req) => {
     courseId: course._id,
     userId: req.data.user._id,
   });
-  if (courseEnrollments.length > 0)
-    return NextResponse.json({ enroll: courseEnrollments[0] });
+  if (courseEnrollments.length <= 0)
+    return NextResponse.json({ unenroll: true });
 
-  const courseEnrollment = new CourseEnrollment({
-    courseId: course._id,
-    userId: req.data.user._id,
-  });
-
-  await courseEnrollment.save();
-  return NextResponse.json({ enroll: courseEnrollment });
+  await CourseEnrollment.deleteOne({ _id: courseEnrollments[0]._id });
+  return NextResponse.json({ unenroll: true });
 });
