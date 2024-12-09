@@ -32,7 +32,6 @@ const links = [
   { label: "home", link: "/#Top" },
   { label: "Dashboard", link: "/" },
   { label: "Courses", link: "/courses" },
-  { label: "Blog", link: "/" },
   { label: "Contact", link: "#Footer" },
 ];
 
