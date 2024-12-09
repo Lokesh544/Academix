@@ -29,11 +29,11 @@ import { localdata } from "@/localdata";
 import getUser from "@/lib/utils/user/getUser";
 
 const links = [
-  { label: "home", link: "/" },
+  { label: "home", link: "/#Top" },
   { label: "Dashboard", link: "/" },
   { label: "Courses", link: "/courses" },
   { label: "Blog", link: "/" },
-  { label: "Contact", link: "/" },
+  { label: "Contact", link: "#Footer" },
 ];
 
 const profileLinks = [
@@ -62,7 +62,10 @@ export default function NavBar() {
       <nav className="fixed z-20 h-20 bg-background w-full top-0 left-0 p-2">
         <div className="h-full px-5 border-b-2 border-b-primary">
           <div className="h-full max-w-screen-xl mx-auto flex justify-between items-center">
-            <Link href="/" className="h-full flex items-center justify-between">
+            <Link
+              href="/#Top"
+              className="h-full flex items-center justify-between"
+            >
               <img
                 src="/logo.svg"
                 alt="Logo"
@@ -181,7 +184,7 @@ export default function NavBar() {
           </div>
         </div>
       </nav>
-      <div className="h-20" />
+      <div className="h-20" id="Top" />
     </>
   );
 }
