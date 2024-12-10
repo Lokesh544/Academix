@@ -15,6 +15,7 @@ import getCoursesByUser from "@/lib/utils/course/getCoursesByUser";
 export default function CreatedCourses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [student, setStudent] = useState(false);
 
   useEffect(() => {
     if (typeof window != "undefined") {
@@ -42,10 +43,16 @@ export default function CreatedCourses() {
             console.log(err);
             setLoading(false);
           });
+        getUserFromId(userId).then((user) => {
+          if (user.role == 0) {
+            setStudent(true);
+          }
+        });
       })();
     }
   }, []);
 
+  if (student) return;
   return (
     <Section>
       <div className="flex justify-between">

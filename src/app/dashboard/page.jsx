@@ -9,8 +9,10 @@ export default function Page() {
     <main className="xl:max-w-screen-xl h-screen mx-auto px-4 md:px-10">
       <CheckLogin />
       <NavBar />
-      <EnrolledCourses />
-      <CreatedCourses />
+      <div className="min-h-[calc(100vh-20rem)]">
+        <EnrolledCourses />
+        <CreatedCourses />
+      </div>
       <Footer />
     </main>
   );
