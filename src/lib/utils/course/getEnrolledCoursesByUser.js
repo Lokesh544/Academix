@@ -3,7 +3,7 @@
  *
  * @param {String} userId User to Check
  */
-export default async function postEnrollListFromUser(userId) {
+export default async function getEnrolledCoursesByUser(userId) {
   const res = await fetch("/api/enrollList/fromUser", {
     method: "POST",
     body: JSON.stringify({

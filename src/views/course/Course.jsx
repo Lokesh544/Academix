@@ -17,9 +17,9 @@ import { parseHttps, parseNumberToString, textToParagraph } from "@/lib/utils";
 import getCourse from "@/lib/utils/course/getCourse";
 import postCheckEnrolledCourse from "@/lib/utils/course/postCheckEnrolledCourse";
 import postEnrollCourse from "@/lib/utils/course/postEnrollCourse";
-import postEnrollListFromCourse from "@/lib/utils/course/postEnrollListFromCourse";
+import getEnrolledUsersInCourse from "@/lib/utils/course/getEnrolledUsersInCourse";
 import postUnenrollCourse from "@/lib/utils/course/postUnenrollCourse";
-import checkLogin from "@/lib/utils/user/checkLogin";
+import CheckLogin from "@/lib/utils/user/checkLogin";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
 import getUserId from "@/lib/utils/user/getUserId";
 import { localdata } from "@/localdata";
@@ -53,7 +53,6 @@ export default function Course({ id }) {
   });
   const [userId, setUserId] = useState("");
   const [enrolled, setEnrolled] = useState(false);
-  checkLogin();
 
   useEffect(() => {
     if (typeof window != "undefined") {
@@ -66,7 +65,7 @@ export default function Course({ id }) {
               img: data.defaultUserProfileImg,
               role: 1,
             };
-            course.students = (await postEnrollListFromCourse(id)).length;
+            course.students = (await getEnrolledUsersInCourse(id)).length;
             course.data = JSON.parse(course.data);
             setCourse(course);
             await getUserFromId(course.userId)
@@ -148,6 +147,7 @@ export default function Course({ id }) {
 
   return (
     <div className="space-y-6 my-2">
+      <CheckLogin />
       <div className="">
         <Image
           className="rounded"

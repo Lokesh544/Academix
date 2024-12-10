@@ -3,9 +3,7 @@ import { localdata } from "@/localdata";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default async function checkLogin(
-  { reverse, href } = { reverse: false, href: "/" }
-) {
+export default function CheckLogin({ reverse = false, href = "/" }) {
   const router = useRouter();
   useEffect(() => {
     if (

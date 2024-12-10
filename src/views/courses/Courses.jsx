@@ -5,6 +5,7 @@ import { TypographyH1 } from "@/components/ui/typography";
 import CardRender from "@/components/utils/CardRender";
 import SearchBar from "@/components/utils/SearchBar";
 import getCourses from "@/lib/utils/course/getCourses";
+import getEnrolledUsersInCourse from "@/lib/utils/course/getEnrolledUsersInCourse";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
 import { useEffect, useState } from "react";
 
@@ -19,9 +20,11 @@ export default function Courses({ search }) {
           for (let i in courses) {
             courses[i].data = JSON.parse(courses[i].data);
             courses[i].instructor = await getUserFromId(courses[i].userId);
+            courses[i].students = (
+              await getEnrolledUsersInCourse(courses[i]._id)
+            ).length;
             // TODO
             courses[i].stars = 2;
-            courses[i].students = 100;
           }
           setCourses(courses);
           setLoading(false);

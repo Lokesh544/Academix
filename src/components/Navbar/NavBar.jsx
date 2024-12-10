@@ -30,7 +30,7 @@ import getUser from "@/lib/utils/user/getUser";
 
 const links = [
   { label: "home", link: "/#Top" },
-  { label: "Dashboard", link: "/" },
+  { label: "Dashboard", link: "/dashboard" },
   { label: "Courses", link: "/courses" },
   { label: "Contact", link: "#Footer" },
 ];
