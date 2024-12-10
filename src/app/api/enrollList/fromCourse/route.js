@@ -18,7 +18,7 @@ export const POST = TryCatch(async (req) => {
     courseId: course._id,
   });
   const userList = [];
-  for (let enroll in courseEnrollments) {
+  for (let enroll of courseEnrollments) {
     userList.push(await User.findById(enroll.userId).catch(() => {}));
   }
   return NextResponse.json({ userList });
