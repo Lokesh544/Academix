@@ -6,7 +6,6 @@ import getData from "@/lib/db/utils/GetData";
 import TryCatch from "@/lib/db/utils/TryCatch";
 import { NextResponse } from "next/server";
 
-// TODO To complete
 export const POST = TryCatch(async (req) => {
   await dbConnect();
   await getData(req);
