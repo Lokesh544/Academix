@@ -19,6 +19,7 @@ const SearchBar = React.forwardRef(
     );
   }
 );
+SearchBar.displayName = "SearchBar";
 export default SearchBar;
 
 export const SearchBarInput = React.forwardRef(
@@ -37,6 +38,7 @@ export const SearchBarInput = React.forwardRef(
     );
   }
 );
+SearchBarInput.displayName = "SearchBarInput";
 
 export function SearchBarButton({
   className,

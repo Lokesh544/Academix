@@ -103,7 +103,11 @@ export default function EditCourseForm({ id }) {
                 </FormControl>
                 <FormMessage />
                 {field.value != "" && (
-                  <img src={parseHttps(field.value)} className="rounded" />
+                  <img
+                    alt="Course Image"
+                    src={parseHttps(field.value)}
+                    className="rounded"
+                  />
                 )}
               </FormItem>
             )}

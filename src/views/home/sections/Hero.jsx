@@ -20,8 +20,8 @@ export default function Hero() {
           <div className="lg:text-lg leading-loose">
             Explore backend development across diverse frameworks: Express,
             Spring Boot, and Fast API. Experience firsthand how each stack
-            shapes the application's architecture and performance. Join us and
-            broaden your development horizons.
+            shapes the application&apos;s architecture and performance. Join us
+            and broaden your development horizons.
           </div>
           <SearchBar action="/courses" className="w-11/12 lg:w-10/12" />
         </div>

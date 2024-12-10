@@ -43,7 +43,7 @@ export function parseNumberToString(number) {
  */
 export function textToParagraph(string) {
   return string.split("\n").flatMap((ele, i, arr) => {
-    if (arr.length - 1 != i) return [ele, <br />];
+    if (arr.length - 1 != i) return [ele, <br key={arr.length + i} />];
     else return ele;
   });
 }

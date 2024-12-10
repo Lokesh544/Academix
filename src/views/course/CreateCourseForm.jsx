@@ -114,6 +114,7 @@ export default function CreateCourseForm() {
                 <div className="ml-4">
                   {field.value != "" && (
                     <img
+                      alt="Course Card Image"
                       src={parseHttps(field.value)}
                       className="rounded max-w-80"
                     />

@@ -134,6 +134,7 @@ export default function EditCourseCardForm({ id }) {
                 <div className="ml-4">
                   {field.value != "" && (
                     <img
+                      alt="Course Card Image"
                       src={praseHttps(field.value)}
                       className="rounded max-w-80"
                     />

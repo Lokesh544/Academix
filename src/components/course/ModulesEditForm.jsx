@@ -54,12 +54,12 @@ export default function ModulesEditForm({ field, toast }) {
 
   const modules = [];
   const moduleMap = {};
-  for (let module in field.value) {
+  for (let ele in field.value) {
     modules.push({
-      value: field.value[module].name,
-      label: field.value[module].name,
+      value: field.value[ele].name,
+      label: field.value[ele].name,
     });
-    moduleMap[field.value[module].name] = module;
+    moduleMap[field.value[ele].name] = ele;
   }
 
   if (value != "" && !(value in moduleMap)) setValue("");

@@ -60,7 +60,9 @@ export default function CourseModuleListItem({
             <TypographyP className="max-md:text-sm">
               {textToParagraph(description)}
             </TypographyP>
-            <TypographyH4 className="text-lg">What's included</TypographyH4>
+            <TypographyH4 className="text-lg">
+              What&apos;s included
+            </TypographyH4>
           </div>
           <div className="hidden md:flex flex-col">
             <Button asChild variant="secondary">

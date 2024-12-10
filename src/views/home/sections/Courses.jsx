@@ -8,6 +8,7 @@ import CourseCard from "@/components/basic/CourseCard";
 import { useEffect, useState } from "react";
 import getCourses from "@/lib/utils/course/getCourses";
 import getUserFromId from "@/lib/utils/user/getUserFromId";
+import getEnrolledUsersInCourse from "@/lib/utils/course/getEnrolledUsersInCourse";
 
 export default function Courses() {
   const [courses, setCourses] = useState([]);
@@ -20,9 +21,11 @@ export default function Courses() {
           for (let i in courses) {
             courses[i].data = JSON.parse(courses[i].data);
             courses[i].instructor = await getUserFromId(courses[i].userId);
+            courses[i].students = (
+              await getEnrolledUsersInCourse(courses[i]._id)
+            ).length;
             // TODO
             courses[i].stars = 2;
-            courses[i].students = 100;
           }
           courses = courses.slice(0, 5);
           setCourses(courses);

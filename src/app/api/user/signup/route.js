@@ -17,7 +17,7 @@ export const GET = TryCatch(async (req) => {
     name: data.get("username"),
     role: parseInt(data.get("role")),
   });
-  //[ ]
+
   await user.save();
   return NextResponse.json({ msg: "Success", user: user });
 });
